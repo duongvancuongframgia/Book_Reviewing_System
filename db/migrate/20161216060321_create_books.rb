@@ -12,5 +12,7 @@ class CreateBooks < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+    add_foreign_key :books, :categories
+    add_index :books, [:category_id, :created_at]
   end
 end
