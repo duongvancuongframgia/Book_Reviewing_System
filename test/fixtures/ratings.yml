@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  num_rate: 1
+  user: one
+  book: one
+
+two:
+  num_rate: 1
+  user: two
+  book: two
