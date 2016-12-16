@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20161216062459) do
     t.integer  "category_id"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.index ["category_id", "created_at"], name: "index_books_on_category_id_and_created_at"
     t.index ["category_id"], name: "index_books_on_category_id"
   end
 
@@ -58,6 +59,7 @@ ActiveRecord::Schema.define(version: 20161216062459) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["review_id"], name: "index_comments_on_review_id"
+    t.index ["user_id", "review_id"], name: "index_comments_on_user_id_and_review_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
@@ -99,6 +101,7 @@ ActiveRecord::Schema.define(version: 20161216062459) do
     t.boolean  "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id", "created_at"], name: "index_requests_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_requests_on_user_id"
   end
 
@@ -110,6 +113,7 @@ ActiveRecord::Schema.define(version: 20161216062459) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["book_id"], name: "index_reviews_on_book_id"
+    t.index ["user_id", "book_id"], name: "index_reviews_on_user_id_and_book_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
@@ -122,6 +126,7 @@ ActiveRecord::Schema.define(version: 20161216062459) do
     t.boolean  "is_admin",        default: false
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
 end

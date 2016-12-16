@@ -98,3 +98,47 @@ footer ul li {
   float: left;
   margin-left: 15px;
 }
+
+// // Form LogIn
+body {
+  background-color:#ffaa7f;
+  background-image: url('http://education.framgia.vn/assets/background-147a15d1508cafbfcb08fca2eaecf3a926f8862629cac23df9c746bf9593a1df.png');
+  -webkit-font-smoothing: antialiased;
+  font: normal 14px Roboto,arial,sans-serif;
+  background-size: cover;
+  background-position: top center !important;
+  background-repeat: no-repeat !important;
+  min-height: 100% !important;
+}
+
+// .container {
+//     padding: 25px;
+//     position: fixed;
+// }
+
+.form-login {
+    background-color: #EDBD6A;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 15px;
+    border-color:#d2d2d2;
+    border-width: 5px;
+    box-shadow:0 1px 0 #cfcfcf;
+}
+
+h4 { 
+ border:0 solid #fff; 
+ border-bottom-width:1px;
+ padding-bottom:10px;
+ text-align: center;
+}
+
+.form-control {
+    border-radius: 10px;
+}
+
+.wrapper {
+    text-align: center;
+}
