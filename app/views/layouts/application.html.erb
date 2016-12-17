@@ -8,12 +8,19 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   <%= render 'layouts/shim' %>
 </head>
-<body>
-	<%= render 'layouts/header' %>
-	<div class="container">
-	  <%= yield %>
-	  <%= render 'layouts/footer' %>
-	</div>
+<body id="page-top" name="page-top" class="active">
+  <%= render 'layouts/header' %>
+  <% if !logged_in? && current_page?(controller: 'static_pages', action: 'home') %>
+    <%= render 'layouts/slide' %>
+  <% end %>
+  <div class="container-fluid">
+    </br></br></br>
+    <% flash.each do |message_type, message| %>
+      <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
+    <% end %>
+    <%= yield %>
+<!--     <%= render 'layouts/footer' %>   -->
+  </div>  
 </body>
 </html>
 

@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20161216062459) do
     t.text     "description"
     t.date     "publish_date"
     t.string   "author"
-    t.string   "url"
+    t.string   "image"
     t.integer  "page"
     t.float    "rating",       default: 0.0
     t.integer  "category_id"

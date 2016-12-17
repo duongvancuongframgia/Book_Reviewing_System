@@ -4,8 +4,16 @@ class UsersController < ApplicationController
   before_action :admin_user,     only: :destroy
   
 	def new
-		@user = User.new
+    if logged_in?
+      redirect_to root_url
+    else
+		  @user = User.new
+    end
 	end
+
+  def show
+    @user = User.find(params[:id])
+  end
 
 	def create
 		@user = User.new(user_params)
@@ -58,16 +66,12 @@ class UsersController < ApplicationController
 			params.require(:user).permit(:name, :email, :password, :password_confirmation)
 		end
 
-		def check_exist_user
-			
-		end
-
 		def correct_user
       @user = User.find(params[:id])
       redirect_to(root_url) unless current_user?(@user)
     end
 
     def admin_user
-      redirect_to(root_url) unless current_user.admin?
+      redirect_to(root_url) unless current_user.is_admin?
     end
 end
