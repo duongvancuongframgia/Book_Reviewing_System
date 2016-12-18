@@ -9,6 +9,27 @@ Rails.application.routes.draw do
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
-  resources :users, only: [:index, :show, :edit, :update, :create, :destroy]
-  resources :books
+  namespace :admin do
+    root "static_pages#home"
+    resources :categories, except: [:show]
+    resources :books
+    resources :users, only: [:index, :create, :destroy]
+    resources :reviews, only: [:index, :show, :destroy]
+  end
+  resources :users, except: [:destroy, :index] do
+    resources :following, only: [:index]
+    resources :followers, only: [:index]
+    resources :reviews, only: [:index]
+  end
+  resources :books, only: [:index, :show] do
+    resources :reviews do
+      resources :comments
+    end
+    resources :rates, except: [:destroy]
+  end
+  resources :relationships, only: [:create, :destroy]
+  resources :likes, only: [:create, :destroy]
+  resources :rates, only: [:create, :update]
+  # resources :users, only: [:index, :show, :edit, :update, :create, :destroy]
+  # resources :books
 end
