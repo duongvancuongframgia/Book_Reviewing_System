@@ -1,0 +1,57 @@
+<% provide(:title, @book.title) %>
+  <div class="row">
+    <div class="col-sm-3">
+      <%= link_to get_image(@book), @book %>
+      <div class="review-block-name">Author: <%= @book.author %></div>
+      <div class="review-block-date">Published: <%= @book.publish_date %><br/>Published <%= time_ago_in_words(@book.publish_date) %> ago.</div>
+    </div>
+    <div class="col-sm-9">
+      <div class="review-block-rate">
+        <% i = 1 %>
+        <% while i <= @book.rating.floor do %>
+          <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+          </button>
+          <% i += 1 %>
+        <% end %>
+        <% if @book.rating.floor < 5%>
+          <% j = 1 %>
+          <% while j <= 5 - @book.rating.floor do %>
+            <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            </button>
+            <% j += 1 %>
+          <% end %>
+        <% end %>
+        <label><%= @book.rating %></label>
+      </div>
+      <div class="review-block-rate">
+        <button type="button" class="btn btn-danger btn-circle"><i class="glyphicon glyphicon-heart"></i></button>
+      </div>
+      <div class="review-block-rate">
+        <a class="btn icon-btn btn-primary" href="#"><span class="glyphicon btn-glyphicon glyphicon-thumbs-up img-circle text-primary"></span>12</a>
+        <a class="btn icon-btn btn-success" href="#"><span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span>Read</a>
+      </div>
+      <div class="review-block-title"><%= @book.title %></div>
+      <div class="review-block-description">
+        <%= @book.description %>
+      </div>
+      <hr>
+      <h4>Reviews</h4>
+      <% @reviews.each do |review| %>
+       <div class="media">
+          <%= link_to image_tag(review.user.avatar, class: "media-object", size: 80), review.user, :class => "pull-left" %>
+          <div class="media-body">
+            <h4 class="media-heading"><%= review.title %></h4>
+            <p><%= review.content %></p>
+            <ul class="list-inline list-unstyled">
+              <li><span><i class="glyphicon glyphicon-calendar"></i> 2 days, 8 hours </span></li>
+              <li>|</li>
+              <span><i class="glyphicon glyphicon-eye-open"></i> 2</span>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
