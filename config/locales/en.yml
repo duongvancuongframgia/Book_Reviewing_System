@@ -21,3 +21,4 @@
 
 en:
   hello: "Hello world"
+  error_not_exits: "Not Exits"

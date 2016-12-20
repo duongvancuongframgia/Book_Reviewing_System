@@ -10,4 +10,14 @@ class Review < ApplicationRecord
   validates :content, presence: true
   validates :book_id, presence: true
   validates :user_id, presence: true
+
+  scope :newest, ->{order created_at: :desc}
+  scope :search_name_book, ->search do
+    if search
+      Review.joins("INNER JOIN books ON books.id = reviews.book_id")
+        .where("books.name LIKE ?", "%#{search}%")
+    else
+      newest
+    end
+  end
 end

@@ -9,10 +9,89 @@ class User < ApplicationRecord
   has_many :rating, through: :active_rates, source: :book
   has_many :requests
   has_many :comments
+  has_many :activities
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   has_secure_password
   validates :name, presence: true, length: { maximum: 50 }
   validates :email, presence: true, format: {with: VALID_EMAIL_REGEX}, uniqueness: {case_sensitive: false}
   validates :password, presence: true, length: {minimum: 6}, allow_blank: true
+
+  def User.digest string
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+    BCrypt::Engine.cost
+    BCrypt::Password.create string, cost: cost
+  end
+
+  def User.new_token
+    SecureRandom.urlsafe_base64
+  end
+
+  def remember
+    self.remember_token = User.new_token
+    update_attributes remember_digest: User.digest(remember_token)
+  end
+
+  def authenticated? remember_token
+    return false if remember_digest.nil?
+    BCrypt::Password.new(remember_digest).is_password? remember_token
+  end
+
+  def forget
+    update_attributes remember_digest: nil
+  end
+
+  def follow other_user
+    active_relationships.create followed_id: other_user.id
+  end
+
+  def unfollow other_user
+    active_relationships.find_by(followed_id: other_user.id).destroy
+  end
+
+  def following? other_user
+    following.include?other_user
+  end
+
+  scope :favourite_books, -> user_id do
+    Book.joins("INNER JOIN bookmarks ON books.id = bookmarks.book_id")
+      .where("bookmarks.user_id = ? AND bookmarks.favorite = ?",
+      user_id, true).limit Settings.limit_book
+  end
+
+  scope :filter_read_books, -> user_id do
+    Book.joins("INNER JOIN bookmarks ON books.id = bookmarks.book_id")
+      .where("bookmarks.user_id = ? AND bookmarks.status_bookmarks = ?",
+      user_id, true).limit Settings.limit_book
+  end
+
+  scope :filter_like_activity, -> activity_id do
+    Like.where "activity_id = ?", activity_id
+  end
+
+  def like activity
+    active_likes.create activity_id: activity.id
+  end
+
+  def unlike activity
+    active_likes.find_by(activity_id: activity.id).destroy
+  end
+
+  def liking? activity
+    liking.include?activity
+  end
+
+  def rating? book
+    rating.include?book
+  end
+
+  def rate book, num_rate
+    active_rates.create(book_id: book.id, num_rate: num_rate)
+    book.update_attributes(rating: book.raters.average(:num_rate))
+  end
+
+  def re_rate book, num_rate
+    active_rates.find_by(book_id: book.id).update_attributes(num_rate: num_rate)
+    book.update_attributes(rating: book.raters.average(:num_rate))
+  end
 end
