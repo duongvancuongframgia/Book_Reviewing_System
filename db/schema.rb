@@ -10,13 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161216062459) do
+ActiveRecord::Schema.define(version: 20161219014958) do
 
   create_table "activities", force: :cascade do |t|
+    t.integer  "object_id"
     t.integer  "action_type"
     t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["action_type", "object_id"], name: "index_activities_on_action_type_and_object_id"
     t.index ["user_id"], name: "index_activities_on_user_id"
   end
 
@@ -65,13 +67,11 @@ ActiveRecord::Schema.define(version: 20161216062459) do
 
   create_table "likes", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "review_id"
     t.integer  "activity_id"
     t.boolean  "status_like"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["activity_id"], name: "index_likes_on_activity_id"
-    t.index ["review_id"], name: "index_likes_on_review_id"
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 

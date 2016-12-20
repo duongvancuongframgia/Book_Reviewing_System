@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   resources :relationships, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
   resources :rates, only: [:create, :update]
+  resources :activities, only: [:create, :destroy]
   # resources :users, only: [:index, :show, :edit, :update, :create, :destroy]
   # resources :books
 end
