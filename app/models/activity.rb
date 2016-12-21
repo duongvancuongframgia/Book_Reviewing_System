@@ -3,6 +3,6 @@ class Activity < ApplicationRecord
 
   has_many :likes, dependent: :destroy
 
-  validates :object_id, presence: true, uniqueness: true
-  validates :user_id, presence: true, uniqueness: true
+  validates :object_id, presence: true
+  validates :object_id, uniqueness: { scope: :action_type }
 end

@@ -70,6 +70,10 @@
             <li><span><i class="glyphicon glyphicon-calendar"></i> <%= "#{time_ago_in_words(review.created_at)}" %></span></li>
             <li>|</li>
             <span><i class="glyphicon glyphicon-eye-open"></i> 2</span>
+            <li>|</li>
+            <%= link_to likes_path, remote: true, method: :post, :class => "btn icon-btn btn-primary" do %>
+              <span class="glyphicon btn-glyphicon glyphicon-thumbs-up img-circle text-primary"></span>
+            <% end %>
           </ul>
         </div>
       </div>

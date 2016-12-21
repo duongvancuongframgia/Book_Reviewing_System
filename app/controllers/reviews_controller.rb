@@ -15,19 +15,17 @@ class ReviewsController < ApplicationController
 
   def create
     @book = Book.find_by(id: params[:book_id])
-    @activity = current_user.activities.build
-    @activity.active_type = "Review"
     unless @book
       flash[:warning] = t "record_isnt_exist"
       redirect_to books_url
     end
     @review = @book.reviews.build(review_params)
     @review.user_id = current_user.id
-    @review.save
-    @activity.object_id = @review.id
-    @activity.save
-    respond_to do |format|
-      format.js
+    if @review.save
+      current_user.activities.create(object_id: @review.id, action_type: 1)
+      respond_to do |format|
+        format.js
+      end
     end
   end
 
