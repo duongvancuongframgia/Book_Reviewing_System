@@ -1,7 +1,7 @@
-class BooksController < ApplicationController
-  before_action :logged_in_user
-  
-  def index
+class Admin::BooksController < ApplicationController
+   before_action :verify_admin_access?
+
+   def index
      @books = Book.filter_newest.paginate(page: params[:page],
         per_page: Settings.per_page)
    end
@@ -41,22 +41,44 @@ class BooksController < ApplicationController
   end
 
   def new
-    
+    @book = Book.new
   end
 
   def create
-
+    @book = Book.new book_params
+    if @book.save
+      flash[:success] = t "admin_book"
+      redirect_to [:admin, :books]
+    else
+      render "new"
+    end
   end
 
   def edit
-
+    @book = Book.find(params[:id])    
   end
 
   def update
-
+    @book = Book.find(params[:id])
+ 
+    if @book.update(book_params)
+      redirect_to @book
+    else
+      render 'edit'
+    end
   end
 
   def destroy
+    @book = Book.find(params[:id])
+    @book.destroy
+    flash[:success] = t "admin.success_destroyed_book"
+    redirect_to [:admin, :books]  
+  end
 
+  private  
+
+  def book_params
+    params.require(:book).permit :title, :description, :publish_date, :author, :image,
+      :page, :rating, :category_id
   end
 end

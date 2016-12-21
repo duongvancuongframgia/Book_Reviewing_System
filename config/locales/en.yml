@@ -24,3 +24,9 @@ en:
   error_not_exits: "Not Exits"
   title_follower: "Followers"
   title_following: "Following"
+
+  admin_book: "Success"
+  admin:
+    success_destroyed_book: "Success destroy book"
+    unsuccess_destroyed_book: "Unsuccess destroy book"
+    success_updated_book: "Success updated book"
