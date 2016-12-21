@@ -1,5 +1,4 @@
 class BooksController < ApplicationController
-  before_action :logged_in_user
 
   def index
     @books_search_by_title = Book.search_by_title.paginate(page: params[:page])

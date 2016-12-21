@@ -1,5 +1,5 @@
 class ReviewsController < ApplicationController
-    before_action :logged_in_user, only: [:create]
+  before_action :logged_in_user, only: [:create, :update]
 
   def index
     @user = User.find_by(id: params[:user_id])
@@ -15,6 +15,8 @@ class ReviewsController < ApplicationController
 
   def create
     @book = Book.find_by(id: params[:book_id])
+    @activity = current_user.activities.build
+    @activity.active_type = "Review"
     unless @book
       flash[:warning] = t "record_isnt_exist"
       redirect_to books_url
@@ -22,6 +24,8 @@ class ReviewsController < ApplicationController
     @review = @book.reviews.build(review_params)
     @review.user_id = current_user.id
     @review.save
+    @activity.object_id = @review.id
+    @activity.save
     respond_to do |format|
       format.js
     end

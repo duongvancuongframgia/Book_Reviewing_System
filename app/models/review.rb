@@ -5,6 +5,8 @@ class Review < ApplicationRecord
   has_many  :comments, dependent: :destroy
   has_many :passive_likes, class_name: Like.name, foreign_key: :review_id, dependent: :destroy
   has_many :likers, through: :passive_likes, source: :user
+  has_many :likes
+  has_many :comments
 
   validates :title, presence: true, length: {maximum: 100}
   validates :content, presence: true
