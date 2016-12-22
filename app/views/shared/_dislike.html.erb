@@ -1,0 +1,4 @@
+<%= link_to like_path(current_user.get_like(object, 1)),
+  remote: true, method: :delete, :class => "btn icon-btn btn-primary" do %>
+  <span class="glyphicon btn-glyphicon glyphicon-thumbs-down img-circle text-primary"></span>
+<% end %>

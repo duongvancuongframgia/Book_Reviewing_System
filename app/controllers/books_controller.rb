@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_action :logged_in_user
+  before_action :logged_in_user, except: [:show, :index]
   
   def index
      @books = Book.filter_newest.paginate(page: params[:page],

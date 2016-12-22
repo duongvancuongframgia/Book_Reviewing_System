@@ -6,8 +6,13 @@
     <ul class="list-inline list-unstyled">
       <li><span><i class="glyphicon glyphicon-calendar"></i> <%= @review.created_at %> </span></li>
       <li>|</li>
-      <span><i class="glyphicon glyphicon-eye-open"></i> 2</span>
-      <a class="btn icon-btn btn-primary" href="#"><span class="glyphicon btn-glyphicon glyphicon-thumbs-up img-circle text-primary"></span>12</a>
+      <span id="like-form-<%= @review.id %>">
+        <% unless current_user.liking?(@review, 1)%>
+          <%= render partial: "shared/like", locals: {object: @review} if logged_in?%>
+        <% else %>
+          <%= render partial: "shared/dislike", locals: {object: @review} if logged_in?%>
+        <% end %>
+      </span>
     </div>
     </ul>
   </div>

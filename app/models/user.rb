@@ -78,8 +78,9 @@ class User < ApplicationRecord
     active_likes.find_by(activity_id: activity.id).destroy
   end
 
-  def liking? activity
-    liking.include?activity
+  def liking? activity, action_type
+    @active = Activity.find_by(user_id: User.ids, object_id: activity.id, action_type: action_type)
+    liking.include?@active
   end
 
   def rating? book
@@ -94,5 +95,10 @@ class User < ApplicationRecord
   def re_rate book, num_rate
     active_rates.find_by(book_id: book.id).update_attributes(num_rate: num_rate)
     book.update_attributes(rating: book.raters.average(:num_rate))
+  end
+
+  def get_like object, action_type
+    @actity = Activity.find_by(object_id: object.id, action_type: action_type)
+    return Like.find_by(activity_id: @actity.id)
   end
 end

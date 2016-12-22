@@ -22,4 +22,5 @@ class Review < ApplicationRecord
       newest
     end
   end
+  
 end

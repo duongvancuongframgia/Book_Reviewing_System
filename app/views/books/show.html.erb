@@ -71,9 +71,15 @@
             <li>|</li>
             <span><i class="glyphicon glyphicon-eye-open"></i> 2</span>
             <li>|</li>
-            <%= link_to likes_path, remote: true, method: :post, :class => "btn icon-btn btn-primary" do %>
-              <span class="glyphicon btn-glyphicon glyphicon-thumbs-up img-circle text-primary"></span>
-            <% end %>
+            <span id="like-form-<%= review.id %>">
+              <% if logged_in? %>
+                <% unless current_user.liking?(review, 1)%>
+                  <%= render partial: "shared/like", locals: {object: review} if logged_in?%>
+                <% else %>
+                  <%= render partial: "shared/dislike", locals: {object: review} if logged_in?%>
+                <% end %>
+              <% end %> 
+            </span>
           </ul>
         </div>
       </div>
