@@ -1,0 +1,7 @@
+<%= form_for([:book, :review, @comment], html: { multipart: true }, remote: true) do |f| %>
+      
+  <div class="field">
+    <%= f.text_area :content, placeholder: "Compose new comment..." %>
+  </div>
+  <%= f.submit "Edit", class: "btn btn-primary" %>
+<% end %>

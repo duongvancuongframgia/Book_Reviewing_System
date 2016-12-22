@@ -1,0 +1,22 @@
+<li id="comments-<%= comment.id %>">
+  <%= link_to image_tag(comment.user.avatar, class: "media-object", size: 80), comment.user, :class => "pull-left" %>
+  <span class="user">Comment's: <%= link_to comment.user.name, comment.user %></span>
+  <span class="body" id="comment_content-<%= comment.id %>">
+    <%= comment.content %>
+  </span>
+  <span class="timestamp">
+  <% if current_user?(comment.user) %>
+    <%= link_to edit_book_review_comment_path(@book, comment.review_id, comment.id), remote: true, :class => "btn btn-warning" do %>
+      <i class="glyphicon glyphicon-pencil">EDIT</i>
+    <% end %> 
+   <% end %>
+  <% if current_user?(comment.user) %>
+    <%= link_to book_review_comment_path(@book.id, comment.review_id, comment.id), remote: true, method: :delete, data: { confirm: "You sure?" }, :class => "btn btn-danger" do %>
+      <i class="glyphicon glyphicon-trash">DELETE</i>
+    <% end %>
+  <% end %>
+  </span>
+  <span class="timestamp">
+    Posted <%= time_ago_in_words(comment.created_at) %> ago.
+  </span>
+</li>

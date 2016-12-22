@@ -1,0 +1,10 @@
+<% if logged_in? %>
+  <%= form_for [@book, review, Comment.new], remote: true do |f| %>
+    <div class="field">
+      <%= f.text_area :content, class: "form-control reset-input" %>
+    </div>
+    <div class="actions">
+      <%= f.submit t "send" %>
+    </div>
+  <% end %>
+<% end %>

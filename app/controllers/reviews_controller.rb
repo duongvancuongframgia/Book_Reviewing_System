@@ -1,5 +1,5 @@
 class ReviewsController < ApplicationController
-    before_action :logged_in_user, only: [:create]
+  before_action :logged_in_user, only: [:create, :update]
 
   def index
     @user = User.find_by(id: params[:user_id])
@@ -21,9 +21,11 @@ class ReviewsController < ApplicationController
     end
     @review = @book.reviews.build(review_params)
     @review.user_id = current_user.id
-    @review.save
-    respond_to do |format|
-      format.js
+    if @review.save
+      current_user.activities.create(object_id: @review.id, action_type: 1)
+      respond_to do |format|
+        format.js
+      end
     end
   end
 

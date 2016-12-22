@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :liking, through: :active_likes, source: :activity
   has_many :active_rates, class_name: Rating.name, foreign_key: :user_id, dependent: :destroy
   has_many :rating, through: :active_rates, source: :book
+  has_many :reviews, dependent: :destroy
   has_many :requests
   has_many :comments
   has_many :activities
