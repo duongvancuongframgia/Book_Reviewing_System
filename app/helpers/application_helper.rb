@@ -16,4 +16,11 @@ module ApplicationHelper
       image_tag "book1.jpg", class: class_image, size: 140
     end
   end
+  def get_image_user user, class_image = ""
+    if user.avatar?
+      image_tag user.avatar, class: class_image, size: 140
+    else
+      image_tag "avatar.jpg", class: class_image, size: 140
+    end
+  end
 end
