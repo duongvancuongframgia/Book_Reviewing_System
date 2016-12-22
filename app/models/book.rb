@@ -19,7 +19,7 @@ class Book < ApplicationRecord
   end
   scope :show_newest, ->do
     order(created_at: :desc).limit Settings.limit_book
-  end
+  end  
   scope :filter_newest, ->{order created_at: :desc}
   scope :search_by_title, ->search do
     where("title LIKE ?", "%#{search}%").limit Settings.limit_book
