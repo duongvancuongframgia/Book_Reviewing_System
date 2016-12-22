@@ -1,0 +1,15 @@
+<%= will_paginate @users %>
+<% @users.each do |user| %>
+    <div class="well">
+      <div class="media">
+        <%= link_to get_image_user(user, "media-object"), user, :class => "pull-left" %>
+        <div class="media-body">
+          <h4 ><%= user.name %></h4>
+          <p ><%= user.email %></p>
+          <p><%= link_to "read detail", '#' %></p>
+        </div>
+      </div>
+    </div>
+    <hr>
+<% end %>
+<%= will_paginate @categories %>
