@@ -4,9 +4,10 @@
       <div class="media">
         <%= link_to get_image_user(user, "media-object"), user, :class => "pull-left" %>
         <div class="media-body">
-          <h4 ><%= user.name %></h4>
-          <p ><%= user.email %></p>
-          <p><%= link_to "read detail", '#' %></p>
+          <p><%= user.name %></p>
+          <p><%= user.email %></p>
+          <p><%= link_to "detail user", admin_user_path(user) %></p>
+          <%= link_to "Delete", [:admin, user], method: :delete, data: {confirm: "are you sure?"} %>
         </div>
       </div>
     </div>
