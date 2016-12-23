@@ -8,8 +8,8 @@ class FollowersController < ApplicationController
       redirect_to root_path
     end
     @users = @user.followers.paginate(page: params[:page])
-    respond_to do |format|
-      format.js {render "users/show_follow.js.erb", object: @users}
-    end
+    # respond_to do |format|
+    #   format.js {render "users/show_follow_list.js.erb", object: @users}
+    # end
   end
 end

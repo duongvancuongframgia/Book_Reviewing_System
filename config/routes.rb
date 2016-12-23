@@ -23,10 +23,10 @@ Rails.application.routes.draw do
     resources :reviews do
       resources :comments
     end
-    resources :rating, except: [:destroy]
+    resources :rates, except: [:destroy]
   end
   resources :relationships, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
-  resources :rating, only: [:create, :update]
+  resources :rates, only: [:create, :update]
   resources :activities, only: [:create, :destroy]
 end

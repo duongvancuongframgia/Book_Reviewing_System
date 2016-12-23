@@ -1,0 +1,25 @@
+<div class="row profile">
+  <div class="col-md-3">
+    <%= render partial: "shared/user_info", locals: {user: @user} %>
+  </div>
+  <div class="col-md-9">
+    <div class="row clearfix show_follow">
+      <div class="col-md-12 column">
+        <%= will_paginate @users %>
+        <% @users.each do |user| %>
+            <div class="well">
+              <div class="media">
+                <%= link_to get_image_user(user, "media-object"), user, :class => "pull-left" %>
+                <div class="media-body">
+                  <h4 ><%= user.name %></h4>
+                  <p ><%= user.email %></p>
+                </div>
+              </div>
+            </div>
+            <hr>
+        <% end %>
+        <%= will_paginate @users %>
+      </div>
+    </div>
+  </div>
+</div>
