@@ -10,13 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161216062459) do
+ActiveRecord::Schema.define(version: 20161223080303) do
 
   create_table "activities", force: :cascade do |t|
+    t.integer  "object_id"
     t.integer  "action_type"
     t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["action_type", "object_id"], name: "index_activities_on_action_type_and_object_id"
     t.index ["user_id"], name: "index_activities_on_user_id"
   end
 
@@ -36,12 +38,13 @@ ActiveRecord::Schema.define(version: 20161216062459) do
     t.text     "description"
     t.date     "publish_date"
     t.string   "author"
-    t.string   "url"
+    t.string   "image"
     t.integer  "page"
     t.float    "rating",       default: 0.0
     t.integer  "category_id"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.index ["category_id", "created_at"], name: "index_books_on_category_id_and_created_at"
     t.index ["category_id"], name: "index_books_on_category_id"
   end
 
@@ -58,18 +61,17 @@ ActiveRecord::Schema.define(version: 20161216062459) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["review_id"], name: "index_comments_on_review_id"
+    t.index ["user_id", "review_id"], name: "index_comments_on_user_id_and_review_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "likes", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "review_id"
     t.integer  "activity_id"
     t.boolean  "status_like"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["activity_id"], name: "index_likes_on_activity_id"
-    t.index ["review_id"], name: "index_likes_on_review_id"
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
@@ -99,6 +101,7 @@ ActiveRecord::Schema.define(version: 20161216062459) do
     t.boolean  "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id", "created_at"], name: "index_requests_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_requests_on_user_id"
   end
 
@@ -110,6 +113,7 @@ ActiveRecord::Schema.define(version: 20161216062459) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["book_id"], name: "index_reviews_on_book_id"
+    t.index ["user_id", "book_id"], name: "index_reviews_on_user_id_and_book_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
@@ -119,9 +123,13 @@ ActiveRecord::Schema.define(version: 20161216062459) do
     t.string   "password_digest"
     t.string   "remember_digest"
     t.string   "avatar"
-    t.boolean  "admin",           default: false
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.boolean  "is_admin",          default: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.string   "activation_digest"
+    t.boolean  "activated",         default: true
+    t.datetime "activated_at"
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
 end

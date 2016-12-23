@@ -1,0 +1,4 @@
+<%= link_to likes_path(:object_id => object.id, :action_type => 1),
+  remote: true, method: :post, :class => "btn icon-btn btn-primary" do %>
+  <span class="glyphicon btn-glyphicon glyphicon-thumbs-up img-circle text-primary"></span>
+<% end %>

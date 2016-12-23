@@ -1,0 +1,13 @@
+<%= form_for [:admin, @category] do |f| %>
+    <%= render "shared/error_messages" , object: @category %>
+    <div>
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+
+    <div>
+      <%= f.submit yield(:button_text), class: "btn btn-primary",
+                   id: "btn_book" %>
+      <%= link_to t(".cancel"), :back, class: "btn btn-default" %>
+    </div>
+<% end %>

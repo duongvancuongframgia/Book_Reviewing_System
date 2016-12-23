@@ -1,0 +1,47 @@
+<div class="row profile">
+  <div class="col-md-3">
+    <%= render partial: "shared/user_info", locals: {user: @user} %>
+  </div>
+  <div class="col-md-9">
+    <div class="row clearfix">
+      <div class="col-md-12 column">
+        <div class="tabbable" id="tabs-444468">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#panel-list-reviews" data-toggle="tab">List Reviews</a>
+            </li>
+            <li>
+              <a href="#panel-list-farorite-book" data-toggle="tab">List Farorite Books</a>
+            </li>
+            <li>
+              <a href="#panel-list-read-book" data-toggle="tab">List Read Books</a>
+            </li>
+          </ul>
+        </div>
+        <div class="tab-content">
+          <div class="tab-pane active" id="panel-list-reviews">
+            <div class="row clearfix">
+              <div class="col-md-8 column">
+                <p>
+                  <strong>About me</strong><br/>
+                    it's just awful to write this stuff and i hate having to sell myself or make myself seem like some amazing superhuman. i have some generic interests, im a bit shy, and i dont play games and just want be there for a girl and make her feel like the most unique and special person, so this is one of the most annoying experiences ever. i dont even know why i bother with this stuff when everyone is basically selling themselves as an idealized superman and I just want girls to know who I am and they can take or leave it. 
+                </p>
+              </div>
+              <div class="col-md-4 column"></div>
+            </div>
+          </div>
+          <div class="tab-pane" id="panel-list-farorite-book">
+            <div class="row clearfix">
+              <div class="col-md-8 column"></div>
+              <div class="col-md-4 column">
+                <p>
+                  Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

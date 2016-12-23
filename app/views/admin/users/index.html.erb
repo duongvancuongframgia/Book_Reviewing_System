@@ -1,0 +1,16 @@
+<%= will_paginate @users %>
+<% @users.each do |user| %>
+    <div class="well">
+      <div class="media">
+        <%= link_to get_image_user(user, "media-object"), user, :class => "pull-left" %>
+        <div class="media-body">
+          <p><%= user.name %></p>
+          <p><%= user.email %></p>
+          <p><%= link_to "detail user", admin_user_path(user) %></p>
+          <%= link_to "Delete", [:admin, user], method: :delete, data: {confirm: "are you sure?"} %>
+        </div>
+      </div>
+    </div>
+    <hr>
+<% end %>
+<%= will_paginate @categories %>

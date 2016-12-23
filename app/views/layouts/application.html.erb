@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>BookReviewingSystem</title>
-    <%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
-
-  <body>
+<head>
+  <title><%= full_title(yield(:title)) %></title>
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag 'application', media: 'all', 
+    'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= render 'layouts/shim' %>
+</head>
+<body id="page-top" name="page-top" class="active">
+  <%= render 'layouts/header' %>
+  <% if !logged_in? && current_page?(controller: 'static_pages', action: 'home') %>
+    <%= render 'layouts/slide' %>
+  <% end %>
+  <div class="container-fluid">
+    </br></br></br>
+    <% flash.each do |message_type, message| %>
+      <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
+    <% end %>
     <%= yield %>
-  </body>
+<!--     <%= render 'layouts/footer' %>   -->
+  </div>  
+</body>
 </html>
+

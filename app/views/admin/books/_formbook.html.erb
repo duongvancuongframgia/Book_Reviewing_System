@@ -1,0 +1,41 @@
+<%= form_for [:admin, @book] do |f| %>
+  <%= render "shared/error_messages" , object: @book %>
+  <div>
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+  <div>
+    <%= f.label :description %>
+    <%= f.text_field :description, class: "form-control" %>
+  </div>
+  <div>
+    <%= f.label :publish_date %>
+    <%= f.text_field :publish_date, class: "form-control" %>
+  </div>
+  <div>
+    <%= f.label :author %>
+    <%= f.text_field :author, class: "form-control" %>
+  </div>
+  <div>
+    <%= f.label :image %>
+    <%= f.text_field :image, class: "form-control" %>
+  </div>
+  <div>
+    <%= f.label :page %>
+    <%= f.text_field :page, class: "form-control" %>
+  </div>
+  <div>
+    <%= f.label :rating %>
+    <%= f.text_field :rating, class: "form-control" %>
+  </div>
+  <div>
+    <%= f.label :category_id %>
+    <%= f.select :category_id, Category.all.collect { |p| [ p.name, p.id ] }, include_blank: true %>
+  </div>
+
+  <div>
+    <%= f.submit yield(:button_text), class: "btn btn-primary",
+      id: "btn_book" %>
+    <%= link_to t(".cancel"), :back, class: "btn btn-default" %>
+  </div>
+<% end %>
