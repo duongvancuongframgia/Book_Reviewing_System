@@ -1,23 +1,30 @@
-<% provide(:title, @book.title) %>
+<% provide :title, @book.title %>
 <div class="row">
   <div class="col-sm-3">
-    <%= link_to get_image(@book), @book %>
-    <div class="review-block-name">Author: <%= @book.author %></div>
-    <div class="review-block-date">Published: <%= @book.publish_date %><br/>Published <%= time_ago_in_words(@book.publish_date) %> ago.</div>
+    <%= link_to get_image @book, @book %>
+    <div class="review-block-name"><%= t "views.books.show.author" %>
+      <%= @book.author %></div>
+    <div class="review-block-date"><%= t "views.books.show.publish_date" %>
+      <%= @book.publish_date %> </div>
     <div class="rating-block">
-      <h4>Average user rating</h4>
-      <h2 class="bold padding-bottom-7"><%= @book.rating %> / 5</h2>
+      <h4><%= t "views.books.show.average_user_rating" %></h4>
+      <h2 class="bold padding-bottom-7">
+        <%= @book.rating.floor %> /
+        <%= t "views.books.show.rate" %>
+      </h2>
       <% i = 1 %>
       <% while i <= @book.rating.floor do %>
-        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+        <button type="button" class="btn btn-warning btn-sm"
+          aria-label="Left Align">
           <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
         </button>
         <% i += 1 %>
       <% end %>
-      <% if @book.rating.floor < 5%>
+      <% if @book.rating.floor < Settings.max_rate%>
         <% j = 1 %>
-        <% while j <= 5 - @book.rating.floor do %>
-          <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
+        <% while j <= Settings.max_rate - @book.rating.floor do %>
+          <button type="button" class="btn btn-default btn-grey btn-sm"
+            aria-label="Left Align">
             <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
           </button>
           <% j += 1 %>
@@ -27,51 +34,47 @@
   </div>
   <div class="col-sm-9">
     <div class="review-block-rate">
-      <% i = 1 %>
-      <% while i <= @book.rating.floor do %>
-        <%= link_to rating_index_path(@book),
-          remote: true, method: :post, :class => "btn btn-warning btn-xs" do %>
-          <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+      <% if logged_in? %>
+        <% if current_user.rating? @book %>
+          <%= render partial: "shared/re_rate", locals: {book: @book} %>
+        <% else %>
+          <%= render partial: "shared/rate", locals: {book: @book} %>
         <% end %>
-        <% i += 1 %>
-      <% end %>
-      <% if @book.rating.floor < 5%>
-        <% j = 1 %>
-        <% while j <= 5 - @book.rating.floor do %>
-          <%= link_to book_rates_path(@book),
-          remote: true, method: :post, :class => "btn btn-warning btn-xs" do %>
-          <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-        <% end %>
-          <% j += 1 %>
-        <% end %>
-      <% end %>
-      <label><%= @book.rating %></label>
+      <% end %>  
     </div>
     <div class="review-block-rate">
-      <button type="button" class="btn btn-danger btn-circle"><i class="glyphicon glyphicon-heart"></i></button>
+      <button type="button" class="btn btn-danger btn-circle">
+        <i class="glyphicon glyphicon-heart"></i>
+      </button>
     </div>
     <div class="review-block-rate">
-      <a class="btn icon-btn btn-primary" href="#"><span class="glyphicon btn-glyphicon glyphicon-thumbs-up img-circle text-primary"></span>12</a>
-      <a class="btn icon-btn btn-success" href="#"><span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span>Read</a>
+      <a class="btn icon-btn btn-success" href="#">
+        <span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success">
+        </span>Read</a>
     </div>
     <div class="review-block-title"><%= @book.title %></div>
     <div class="review-block-description">
       <%= simple_format @book.description %>
     </div>
     <hr>
-    <h4>Reviews</h4>
+    <h4><%= t "views.books.show.review" %></h4>
     <div class="list-reviews">
     <% @reviews.each do |review| %>
       <div class="media">
-        <%= link_to image_tag(review.user.avatar, class: "media-object", size: 80), review.user, :class => "pull-left" %>
+        <%= link_to image_tag(review.user.avatar, class: "media-object",
+          size: Settings.max_size_avatar_show_review), review.user,
+            :class => "pull-left" %>
         <div class="media-body">
-          <h4 class="media-heading">Title: <%= review.title %></h4>
-          <p>Content: </p>
+          <h4 class="media-heading"><%= review.title %></h4>
+          <p><%= t "views.books.show.content_review" %></p>
           <p><%= simple_format review.content %></p>
           <ul class="list-inline list-unstyled">
-            <li><span><i class="glyphicon glyphicon-calendar"></i> <%= "#{time_ago_in_words(review.created_at)}" %></span></li>
-            <li>|</li>
-            <span><i class="glyphicon glyphicon-eye-open"></i> 2</span>
+            <li>
+              <span>
+                <i class="glyphicon glyphicon-calendar"></i>
+                  <%= "#{time_ago_in_words(review.created_at)}" %>
+              </span>
+            </li>
             <li>|</li>
             <span id="like-form-<%= review.id %>">
               <% if logged_in? %>
@@ -87,7 +90,7 @@
       </div>
       <div class="row">
         <div class="col-lg-9 col-sm-offset-1 aboutme">
-          <p>Comment's review</p>
+          <p><%= t "views.books.show.comment_review"%></p>
           <hr style="margin:8px auto;border-bottom: 1px solid #ccc;">
           <ol class="entries" id="list-comment-<%= review.id %>">
               <%= render review.comments %>
@@ -99,7 +102,7 @@
     </div>
     <%= will_paginate @reviews %>
     <% if logged_in? %>
-      <div><%= t "book_new_review" %></div>
+      <div><%= t "views.books.show.book_new_review" %></div>
       <div class = "row">
         <div class="col-md-6 mess-area-add"></div>
       </div>

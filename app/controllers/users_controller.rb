@@ -17,14 +17,14 @@ class UsersController < ApplicationController
   end
 
   def show
-    @reviews = @user.reviews.paginate(page: params[:page])
+    @reviews = @user.reviews.paginate page: params[:page]
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User.new user_params
     if @user.save
-      log_in(@user)
-      flash[:info] = "Account successfully!"
+      log_in @user
+      flash[:info] = t "app.controllers.user.create_success"
       redirect_to root_url
     else
       render :new
@@ -35,8 +35,8 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes(user_params)
-      flash[:success] = "Profile updated"
+    if @user.update_attributes user_params
+      flash[:success] = t "app.controllers.user.update_success"
       redirect_to @user
     else
       render :edit
@@ -45,41 +45,41 @@ class UsersController < ApplicationController
 
   def destroy
     User.find(params[:id]).destroy
-    flash[:success] = "User deleted"
+    flash[:success] = t "app.controllers.user.delete_success"
     redirect_to users_url
   end
 
   def following
-    @title = 'Following'
-    @users = @user.following.paginate(page: params[:page])
-    render 'show_follow'
+    @title = t "app.controllers.user.title_following"
+    @users = @user.following.paginate page: params[:page]
+    render "show_follow"
   end
 
   def followers
-    @title = 'Followers'
-    @users = @user.followers.paginate(page: params[:page])
-    render 'show_follow'
+    @title = t "app.controllers.user.title_follower"
+    @users = @user.followers.paginate page: params[:page]
+    render "show_follow"
   end
 
   private
     def user_params
-      params.require(:user).permit(:name, :email,
-        :password, :password_confirmation)
+      params.require(:user).permit :name, :email,
+        :password, :password_confirmation
     end
 
     def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user)
+      load_user
+      redirect_to root_url unless current_user? @user
     end
 
     def admin_user
-      redirect_to(root_url) unless current_user.is_admin?
+      redirect_to root_url unless current_user.is_admin?
     end
 
     def load_user
       @user = User.find_by id: params[:id]
       unless @user
-        flash[:warning] = t "record_isnt_exist"
+        flash[:danger] = t "app.not_exits"
         redirect_to root_path
       end
     end
