@@ -2,7 +2,7 @@ class Admin::UsersController < ApplicationController
   before_action :verify_admin_access?
 
   def index
-    @users = User.all.paginate(page: params[:page],
+    @users = User.all_except(current_user).paginate(page: params[:page],
       per_page: Settings.per_page)
   end
 
