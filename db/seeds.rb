@@ -1,6 +1,13 @@
 User.create! name: "User 1", email: "user1@gmail.com",
   password: "123123", password_confirmation: "123123",
-  is_admin: true, avatar: "avatar.jpg"
+  is_admin: true, avatar: "avatar.jpg",
+             activated: true,
+             activated_at: Time.zone.now
+User.create! name: "User 2", email: "user2@gmail.com",
+             password: "123123", password_confirmation: "123123",
+             is_admin: false, avatar: "avatar.jpg",
+             activated: false,
+             activated_at: Time.zone.now
 
 Category.create!(name: "Animals and Pets")
 Category.create!(name: "Business")
