@@ -27,7 +27,7 @@ class CommentsController < ApplicationController
         format.html {redirect_to request.referrer}
         format.js
       end
-    else 
+    else
       render :edit
     end
   end

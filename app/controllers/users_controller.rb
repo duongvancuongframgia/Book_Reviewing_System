@@ -62,25 +62,16 @@ class UsersController < ApplicationController
   end
 
   private
-    def user_params
-      params.require(:user).permit :name, :email,
-        :password, :password_confirmation
-    end
+  def user_params
+    params.require(:user).permit :name, :email,
+      :password, :password_confirmation
+  end
 
-    def correct_user
-      load_user
-      redirect_to root_url unless current_user? @user
+  def load_user
+    @user = User.find_by id: params[:id]
+    unless @user
+      flash[:danger] = t "app.not_exits"
+      redirect_to root_path
     end
-
-    def admin_user
-      redirect_to root_url unless current_user.is_admin?
-    end
-
-    def load_user
-      @user = User.find_by id: params[:id]
-      unless @user
-        flash[:danger] = t "app.not_exits"
-        redirect_to root_path
-      end
-    end
+  end
 end

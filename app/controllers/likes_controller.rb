@@ -1,7 +1,7 @@
 class LikesController < ApplicationController
   before_action :logged_in_user
-  before_action :load_review, only: [:create]
-  before_action :load_activity, only: [:create]
+  before_action :load_review, only: :create
+  before_action :load_activity, only: :create
 
   def create
     current_user.like @activity

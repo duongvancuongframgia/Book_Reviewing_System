@@ -1,6 +1,6 @@
 class ReviewsController < ApplicationController
   before_action :logged_in_user, only: [:create, :update]
-  before_action :load_review, only: :[:edit, :update, :destroy]
+  before_action :load_review, only: [:edit, :update, :destroy]
 
   def index
     @user = User.find_by id: params[:user_id]
@@ -45,7 +45,7 @@ class ReviewsController < ApplicationController
         format.html {redirect_to request.referrer}
         format.js
       end
-    else 
+    else
       render :edit
     end
   end
