@@ -1,13 +1,19 @@
 <div class="media">
-  <%= link_to image_tag(@review.user.avatar, class: "media-object", size: 80), @review.user, :class => "pull-left" %>
+  <%= link_to image_tag(@review.user.avatar, class: "media-object",
+    size: Settings.max_size_avatar_show_review),
+    @review.user, :class => "pull-left" %>
   <div class="media-body">
     <h4 class="media-heading"><%= @review.title %></h4>
     <p><%= simple_format @review.content %></p>
     <ul class="list-inline list-unstyled">
-      <li><span><i class="glyphicon glyphicon-calendar"></i> <%= @review.created_at %> </span></li>
+      <li>
+        <span><i class="glyphicon glyphicon-calendar"></i>
+          <%= @review.created_at %>
+        </span>
+      </li>
       <li>|</li>
       <span id="like-form-<%= @review.id %>">
-        <% unless current_user.liking?(@review, 1)%>
+        <% unless current_user.liking?(@review, Settings.action_type_review)%>
           <%= render partial: "shared/like", locals: {object: @review} if logged_in?%>
         <% else %>
           <%= render partial: "shared/dislike", locals: {object: @review} if logged_in?%>
@@ -19,7 +25,7 @@
 </div>
 <div class="row">
   <div class="col-lg-9 col-sm-offset-1 aboutme">
-    <p>Comment's review</p>
+    <p><%= t "views.books.show.comment_review" %></p>
     <hr style="margin:8px auto;border-bottom: 1px solid #ccc;">
     <ol class="entries" id="list-comment-<%= @review.id %>">
         <%= render @review.comments %>

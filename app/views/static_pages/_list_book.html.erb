@@ -1,0 +1,38 @@
+<div class="well">
+  <div class="media">
+    <%= link_to get_image(book, "media-object"), book, :class => "pull-left" %>
+    <div class="media-body">
+      <h4 class="media-heading"><%= book.title %></h4>
+      <p class="text-right"><%= book.author %></p>
+      <p><%= truncate(book.description, :length => Settings.max_len_description) %>
+      <%= link_to "read more", book%></p>
+      <ul class="list-inline list-unstyled">
+        <li>
+          <span>
+            <i class="glyphicon glyphicon-calendar"></i>
+            <%= book.publish_date %>
+          </span>
+        </li>
+        <li>|</li>
+        <span><i class="glyphicon glyphicon-comment"></i><%= pluralize(book.reviews.count, "review") %></span>
+        <li>|</li>
+        <li>
+          <% i = 1 %>
+          <% while i <= book.rating.floor do %>
+            <span class="glyphicon glyphicon-star"></span>
+            <% i += 1 %>
+          <% end %>
+          <% if book.rating.floor < Settings.max_rate %>
+            <% j = 1 %>
+            <% while j <= Settings.max_rate - book.rating.floor do %>
+              <span class="glyphicon glyphicon-star-empty"></span>
+              <% j += 1 %>
+            <% end %>
+          <% end %>
+          <label><%= book.rating %></label>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<hr>

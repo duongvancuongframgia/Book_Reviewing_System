@@ -1,6 +1,6 @@
 <div class="profile-sidebar">
   <div class="profile-userpic">
-    <%= link_to image_tag(user.avatar, class: "media-object", size: 100), user, :class => "img-responsive" %>
+    <%= link_to get_image_user(user, "img-responsive"), user %>
   </div>
   <div class="profile-usertitle">
     <div class="profile-usertitle-name">
@@ -10,9 +10,11 @@
       <%= user.email %>
     </div>
   </div>
-  <%= render partial: "users/follow_form", locals: {user: user} %>
-  <div class="profile-user-send-request">
-    <button type="button" class="btn btn-info btn-sm">Send Request</button>
-  </div>
+  <% if logged_in? %>
+    <%= render partial: "shared/follow_form", locals: {user: user} %>
+    <div class="profile-user-send-request">
+      <button type="button" class="btn btn-info btn-sm">Send Request</button>
+    </div>
+  <% end %>
   <%= render partial: "shared/stats", locals: {user: user} %>
 </div>

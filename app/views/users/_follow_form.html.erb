@@ -1,9 +1,0 @@
-<% unless current_user?(user) %>
-  <div class="profile-userbuttons">
-    <% if current_user.following?(user) %>
-      <%= render 'unfollow' %>
-    <% else %>
-      <%= render 'follow' %>
-    <% end %>
-  </div>
-<% end %>

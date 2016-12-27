@@ -19,19 +19,24 @@ class User < ApplicationRecord
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   has_secure_password
+
+  validates :name, presence: true, length: { maximum: Settings.max_len }
   attr_accessor :remember_token, :activation_token
   before_save   :downcase_email
   before_create :create_activation_digest
   validates :name, presence: true, length: { maximum: 50 }
   validates :email, presence: true, format: {with: VALID_EMAIL_REGEX},
     uniqueness: {case_sensitive: false}
-  validates :password, presence: true, length: {minimum: 6}, allow_blank: true
+  validates :password, presence: true,
+    length: {minimum: Settings.min_len_pass}, allow_blank: true
+
+  scope :all_except, ->(user) { where.not(id: user) }
 
   scope :all_except, ->(user) { where.not(id: user) }
 
   def User.digest string
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
-    BCrypt::Engine.cost
+      BCrypt::Engine.cost
     BCrypt::Password.create string, cost: cost
   end
 
@@ -66,19 +71,19 @@ class User < ApplicationRecord
     following.include?other_user
   end
 
-  scope :favourite_books, -> user_id do
+  scope :favourite_books, ->user_id do
     Book.joins("INNER JOIN bookmarks ON books.id = bookmarks.book_id")
       .where("bookmarks.user_id = ? AND bookmarks.favorite = ?",
       user_id, true).limit Settings.limit_book
   end
 
-  scope :filter_read_books, -> user_id do
+  scope :filter_read_books, ->user_id do
     Book.joins("INNER JOIN bookmarks ON books.id = bookmarks.book_id")
       .where("bookmarks.user_id = ? AND bookmarks.status_bookmarks = ?",
       user_id, true).limit Settings.limit_book
   end
 
-  scope :filter_like_activity, -> activity_id do
+  scope :filter_like_activity, ->activity_id do
     Like.where "activity_id = ?", activity_id
   end
 
@@ -91,7 +96,8 @@ class User < ApplicationRecord
   end
 
   def liking? activity, action_type
-    @active = Activity.find_by(user_id: User.ids, object_id: activity.id, action_type: action_type)
+    @active = Activity.find_by user_id: User.ids,
+      object_id: activity.id, action_type: action_type
     liking.include?@active
   end
 
@@ -100,18 +106,39 @@ class User < ApplicationRecord
   end
 
   def rate book, num_rate
-    active_rates.create(book_id: book.id, num_rate: num_rate)
-    book.update_attributes(rating: book.raters.average(:num_rate))
+    active_rates.create book_id: book.id, num_rate: num_rate
+    book.update_attributes rating: book.raters.average(:num_rate)
   end
 
   def re_rate book, num_rate
-    active_rates.find_by(book_id: book.id).update_attributes(num_rate: num_rate)
-    book.update_attributes(rating: book.raters.average(:num_rate))
+    active_rates.find_by(book_id: book.id).update_attributes num_rate: num_rate
+    book.update_attributes rating: book.raters.average(:num_rate)
   end
 
   def get_like object, action_type
-    @actity = Activity.find_by(object_id: object.id, action_type: action_type)
-    return Like.find_by(activity_id: @actity.id)
+    @actity = Activity.find_by object_id: object.id, action_type: action_type
+    return Like.find_by activity_id: @actity.id
+  end
+
+  def get_rating user, book
+    Rating.find_by user_id: user.id, book_id: book.id
+  end
+
+  def activate
+    update_attribute(:activated,    true)
+    update_attribute(:activated_at, Time.zone.now)
+  end
+
+  private
+  # Converts email to all lower-case.
+  def downcase_email
+    self.email = email.downcase
+  end
+
+  # Creates and assigns the activation token and digest.
+  def create_activation_digest
+    self.activation_token  = User.new_token
+    self.activation_digest = User.digest(activation_token)
   end
 
   def activate

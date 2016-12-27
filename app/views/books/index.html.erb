@@ -6,8 +6,8 @@
         <div class="media-body">
           <h4 class="media-heading"><%= book.title %></h4>
           <p class="text-right"><%= book.author %></p>
-          <p><%= truncate(book.description, :length => 150) %>
-            <%= link_to "read more", book %></p>
+          <p><%= truncate(book.description, :length => Settings.max_len_description) %>
+            <%= link_to t("views.books.index.read_more"), book %></p>
           <ul class="list-inline list-unstyled">
             <li><span><i class="glyphicon glyphicon-calendar"></i> <%= book.publish_date %> </span></li>
             <li>|</li>
@@ -19,9 +19,9 @@
                   <span class="glyphicon glyphicon-star"></span>
                   <% i += 1 %>
               <% end %>
-              <% if book.rating.floor < 5%>
+              <% if book.rating.floor < Settings.max_rate %>
                   <% j = 1 %>
-                  <% while j <= 5 - book.rating.floor do %>
+                  <% while j <= Settings.max_rate - book.rating.floor do %>
                       <span class="glyphicon glyphicon-star-empty"></span>
                       <% j += 1 %>
                   <% end %>

@@ -1,8 +1,4 @@
 en:
-  hello: "Hello world"
-  error_not_exits: "Not Exits"
-  title_follower: "Followers"
-  title_following: "Following"
   admin_book: "Success"
   admin:
     success_destroyed_user: "Success destroy user"
@@ -13,5 +9,85 @@ en:
     unsuccess_destroyed_category: "UnSuccess destroy category"
     success_updated_category: "Success updated category"
     category_updated_success: "Category_updated_success"
-  book_new_review: "Add a review"
-  send: "Send"
+  app:
+    not_exits: "Not Exits"
+    controllers:
+      application:
+        logged_in_user: "Please log in."
+      user:
+        update_success: "Profile updated"
+        create_success: "Account successfully!"
+        delete_success: "User deleted"
+        title_following: "Following"
+        title_follower: "Followers"
+      followers:
+        title_follower: "Followers"
+      following:
+        title_following: "Following"
+      session:
+        login_error: "Invalid email/password combination"
+    helpers:
+      application:
+        base_title: "Ruby on Rails Tutorial Sample App"
+  views:
+    users:
+      edit:
+        title: "Edit user"
+        bt_title_edit: "Save changes"
+        update_title: "Update your profile"
+      new:
+        title: "Sign up"
+        bt_title_signup: "Sign Up"
+      show:
+        list_reviews: "List Reviews"
+        list_favorite: "List Favorite Books"
+        list_read: "List Read Books"
+        title: "Title: "
+        content: "Content: "
+    shared:
+      error_message:
+        error: "The form contains"
+      follow:
+        follow_bt: "Follow"
+      unfollow:
+        unfollow_bt: "Unfollow"
+      stat:
+        title_follower: "Followers"
+        title_following: "Following"
+    session:
+      new:
+        title_login: "Log in"
+        placeholder_email: "Email"
+        placeholder_pass: "Password"
+        remember: "Remember me on this computer"
+        bt_signup_now: "Sign up now!"
+    books:
+      index:
+        read_more: "read more"
+      show:
+        author: "Author: "
+        publish_date: "Published: "
+        average_user_rating: "Average user rating"
+        rate: "5"
+        review: "Reviews"
+        content_review: "Content: "
+        comment_review: "Comment's review: "
+        book_new_review: "Add a review"
+        submit_bt: "Submit"
+    comments:
+      comment:
+        title_comment: "Comment's: "
+        edit_bt: "Edit"
+        del_bt: "Delete"
+        confirm_del: "You sure?"
+        time_post: "Posted "
+        ago: " ago."
+      edit_comment:
+        placeholder_content: "Compose new comment..."
+        sub_edit: "Edit"
+      new:
+        send_bt: "Send"
+    reviews:
+      edit:
+        submit_bt: "Submit"
+

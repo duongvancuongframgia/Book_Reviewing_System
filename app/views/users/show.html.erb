@@ -3,40 +3,75 @@
     <%= render partial: "shared/user_info", locals: {user: @user} %>
   </div>
   <div class="col-md-9">
-    <div class="row clearfix">
+    <div class="row clearfix show_follow">
       <div class="col-md-12 column">
         <div class="tabbable" id="tabs-444468">
           <ul class="nav nav-tabs">
             <li class="active">
-              <a href="#panel-list-reviews" data-toggle="tab">List Reviews</a>
+              <a href="#panel-list-reviews" data-toggle="tab">
+                <%= t "views.users.show.list_reviews"%>
+              </a>
             </li>
             <li>
-              <a href="#panel-list-farorite-book" data-toggle="tab">List Farorite Books</a>
+              <a href="#panel-list-farorite-book" data-toggle="tab">
+                <%= t "views.users.show.list_favorite"%>
+              </a>
             </li>
             <li>
-              <a href="#panel-list-read-book" data-toggle="tab">List Read Books</a>
+              <a href="#panel-list-read-book" data-toggle="tab">
+                <%= t "views.users.show.list_read"%>
+              </a>
             </li>
           </ul>
         </div>
         <div class="tab-content">
           <div class="tab-pane active" id="panel-list-reviews">
             <div class="row clearfix">
-              <div class="col-md-8 column">
-                <p>
-                  <strong>About me</strong><br/>
-                    it's just awful to write this stuff and i hate having to sell myself or make myself seem like some amazing superhuman. i have some generic interests, im a bit shy, and i dont play games and just want be there for a girl and make her feel like the most unique and special person, so this is one of the most annoying experiences ever. i dont even know why i bother with this stuff when everyone is basically selling themselves as an idealized superman and I just want girls to know who I am and they can take or leave it. 
-                </p>
+              <div class="col-md-12 column">
+                <% @reviews.each do |review| %>
+                  <div class="media">
+                    <%= link_to image_tag(review.user.avatar,
+                      class: "media-object",
+                      size: Settings.max_size_avatar_show_review),
+                      review.user, :class => "pull-left" %>
+                    <div class="media-body">
+                      <h4 class="media-heading"><%= t "views.users.show.title"%><%= review.title %></h4>
+                      <p><%= t "views.users.show.content"%></p>
+                      <p><%= simple_format review.content %></p>
+                      <ul class="list-inline list-unstyled">
+                        <li>
+                          <span>
+                            <i class="glyphicon glyphicon-calendar"></i>
+                            <%= "#{review.created_at}" %>
+                          </span>
+                        </li>
+                        <% if logged_in? %>
+                          <li>|</li>
+                          <span id="like-form-<%= review.id %>">
+                            <% unless current_user.liking?(review, Settings.action_type_review)%>
+                              <%= render partial: "shared/like", locals: {object: review} if logged_in?%>
+                            <% else %>
+                              <%= render partial: "shared/dislike", locals: {object: review} if logged_in?%>
+                            <% end %>
+                          </span>
+                        <% end %>
+                      </ul>
+                    </div>
+                  </div>
+                <% end %>
+                <%= will_paginate @reviews %>
               </div>
-              <div class="col-md-4 column"></div>
             </div>
           </div>
           <div class="tab-pane" id="panel-list-farorite-book">
             <div class="row clearfix">
-              <div class="col-md-8 column"></div>
-              <div class="col-md-4 column">
-                <p>
-                  Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small>
-                </p>
+              <div class="col-md-12 column">
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="panel-list-read-book">
+            <div class="row clearfix">
+              <div class="col-md-12 column">
               </div>
             </div>
           </div>
