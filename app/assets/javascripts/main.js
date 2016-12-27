@@ -19,6 +19,8 @@ $(document).on('turbolinks:load',function() {
       },
       success: function(data) {
         $('#btn-follow').text(text);
+        $('#followers').html(data.followers);
+        $('#following').html(data.following);
       },
       error: function(error_message) {
         alert('error ' + error_message);
