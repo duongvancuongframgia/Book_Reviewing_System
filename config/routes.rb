@@ -29,9 +29,5 @@ Rails.application.routes.draw do
   resources :likes, only: [:create, :destroy]
   resources :rates, only: [:create, :update]
   resources :activities, only: [:create, :destroy]
-<<<<<<< HEAD
-end
-=======
   resources :account_activations, only: [:edit]
 end
->>>>>>> 289deb3... second
