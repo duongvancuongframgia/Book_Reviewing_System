@@ -18,6 +18,7 @@ class User < ApplicationRecord
   has_many :activities
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  mount_uploader :avatar, PictureUploader
   has_secure_password
   validates :name, presence: true, length: { maximum: Settings.max_len }
   attr_accessor :remember_token, :activation_token
@@ -28,6 +29,7 @@ class User < ApplicationRecord
     uniqueness: {case_sensitive: false}
   validates :password, presence: true,
     length: {minimum: Settings.min_len_pass}, allow_blank: true
+  validate  :picture_size
 
   scope :all_except, ->(user) { where.not(id: user) }
 
@@ -127,14 +129,18 @@ class User < ApplicationRecord
   end
 
   private
-  # Converts email to all lower-case.
   def downcase_email
     self.email = email.downcase
   end
 
-  # Creates and assigns the activation token and digest.
   def create_activation_digest
     self.activation_token  = User.new_token
     self.activation_digest = User.digest(activation_token)
+  end
+
+  def picture_size
+    if avatar.size > 5.megabytes
+      errors.add(:avatar, "should be less than 5MB")
+    end
   end
 end
