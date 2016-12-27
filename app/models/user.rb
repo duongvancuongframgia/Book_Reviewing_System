@@ -19,14 +19,11 @@ class User < ApplicationRecord
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   has_secure_password
-<<<<<<< HEAD
   validates :name, presence: true, length: { maximum: Settings.max_len }
-=======
   attr_accessor :remember_token, :activation_token
   before_save   :downcase_email
   before_create :create_activation_digest
   validates :name, presence: true, length: { maximum: 50 }
->>>>>>> 7837ce8... Finish admin
   validates :email, presence: true, format: {with: VALID_EMAIL_REGEX},
     uniqueness: {case_sensitive: false}
   validates :password, presence: true,
