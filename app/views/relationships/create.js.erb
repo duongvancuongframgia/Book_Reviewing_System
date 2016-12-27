@@ -1,2 +1,2 @@
-$(".profile-userbuttons").html("<%= escape_javascript(render('users/unfollow')) %>");
-$("#followers").html('<%= @user.followers.count %>');
+$('.profile-userbuttons').html('<%= j render "users/unfollow" %>');
+$('#followers').html('<%= @user.followers.count %>');

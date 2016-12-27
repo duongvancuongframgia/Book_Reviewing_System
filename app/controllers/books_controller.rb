@@ -1,7 +1,7 @@
 class BooksController < ApplicationController
   before_action :logged_in_user, except: [:show, :index]
-  before_action :load_book, only: [:show]
-  
+  before_action :load_book, only: :show
+
   def index
     @books = Book.filter_newest.paginate page: params[:page],
       per_page: Settings.per_page
@@ -37,7 +37,7 @@ class BooksController < ApplicationController
   end
 
   def new
-    
+
   end
 
   def create

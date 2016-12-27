@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new comment_params
     if @comment.save
       current_user.activities.create object_id: @comment.id,
-        Settings.action_type_comment
+        action_type: Settings.action_type_comment
       respond_to do |format|
         format.js
       end
@@ -27,7 +27,7 @@ class CommentsController < ApplicationController
         format.html {redirect_to request.referrer}
         format.js
       end
-    else 
+    else
       render :edit
     end
   end

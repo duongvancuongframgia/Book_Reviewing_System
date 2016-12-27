@@ -49,38 +49,29 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
 
-  def following
-    @title = t "app.controllers.user.title_following"
-    @users = @user.following.paginate page: params[:page]
-    render "show_follow"
-  end
+  # def following
+  #   @title = t "app.controllers.user.title_following"
+  #   @users = @user.following.paginate page: params[:page]
+  #   render "show_follow"
+  # end
 
-  def followers
-    @title = t "app.controllers.user.title_follower"
-    @users = @user.followers.paginate page: params[:page]
-    render "show_follow"
-  end
+  # def followers
+  #   @title = t "app.controllers.user.title_follower"
+  #   @users = @user.followers.paginate page: params[:page]
+  #   render "show_follow"
+  # end
 
   private
-    def user_params
-      params.require(:user).permit :name, :email,
-        :password, :password_confirmation
-    end
+  def user_params
+    params.require(:user).permit :name, :email,
+      :password, :password_confirmation
+  end
 
-    def correct_user
-      load_user
-      redirect_to root_url unless current_user? @user
+  def load_user
+    @user = User.find_by id: params[:id]
+    unless @user
+      flash[:danger] = t "app.not_exits"
+      redirect_to root_path
     end
-
-    def admin_user
-      redirect_to root_url unless current_user.is_admin?
-    end
-
-    def load_user
-      @user = User.find_by id: params[:id]
-      unless @user
-        flash[:danger] = t "app.not_exits"
-        redirect_to root_path
-      end
-    end
+  end
 end
