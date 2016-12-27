@@ -26,9 +26,7 @@ class ReviewsController < ApplicationController
     if @review.save
       current_user.activities.create object_id: @review.id,
         action_type: Settings.action_type_review
-      respond_to do |format|
-        format.js
-      end
+      redirect_back fallback_location: root_path
     end
   end
 

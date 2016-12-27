@@ -1,7 +1,7 @@
 class Review < ApplicationRecord
   belongs_to :user
   belongs_to :book
-  
+
   has_many  :comments, dependent: :destroy
   has_many :passive_likes, class_name: Like.name,
     foreign_key: :review_id, dependent: :destroy

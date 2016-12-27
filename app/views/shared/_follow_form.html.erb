@@ -1,6 +1,6 @@
-<% unless current_user?(user) %>
+<% unless current_user?user %>
   <div class="profile-userbuttons">
-    <% if current_user.following?(user) %>
+    <% if current_user.following?user %>
       <%= render partial: "shared/unfollow", locals: {user: user} %>
     <% else %>
       <%= render partial: "shared/follow", locals: {user: user} %>

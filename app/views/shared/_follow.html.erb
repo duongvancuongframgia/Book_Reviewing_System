@@ -1,5 +1,4 @@
-<%= form_for(current_user.active_relationships.build, remote: true) do |f| %>
-  <div><%= hidden_field_tag :followed_id, @user.id %></div>
-  <%= f.submit t("views.shared.follow.follow_bt"),
-    class: "btn btn-success btn-sm" %>
-<% end %>
+<div><%= hidden_field_tag :followed_id, @user.id %></div>
+<button type="button" class="btn btn-success btn-sm" id="btn-follow">
+  <%= t"views.shared.follow.follow_bt"%>
+</button>
