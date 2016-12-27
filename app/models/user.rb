@@ -13,6 +13,9 @@ class User < ApplicationRecord
     foreign_key: :user_id, dependent: :destroy
   has_many :rating, through: :active_rates, source: :book
   has_many :reviews, dependent: :destroy
+  has_many :active_bookmarks, class_name: Bookmark.name,
+    foreign_key: :user_id, dependent: :destroy
+  has_many :favouriting, through: :active_bookmarks, source: :bookmark
   has_many :requests
   has_many :comments
   has_many :activities
