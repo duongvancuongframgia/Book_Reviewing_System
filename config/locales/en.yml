@@ -72,6 +72,7 @@ en:
         content_review: "Content: "
         comment_review: "Comment's review: "
         book_new_review: "Add a review"
+        submit_bt: "Submit"
     comments:
       comment:
         title_comment: "Comment's: "
