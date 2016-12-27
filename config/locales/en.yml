@@ -1,6 +1,7 @@
 en:
   admin_book: "Success"
   admin:
+    success_destroyed_user: "Success destroy user"
     success_destroyed_book: "Success destroy book"
     unsuccess_destroyed_book: "Unsuccess destroy book"
     success_updated_book: "Success updated book"

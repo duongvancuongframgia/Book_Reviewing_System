@@ -1,12 +1,9 @@
 class Admin::UsersController < ApplicationController
   before_action :verify_admin_access?
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
-  before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: :destroy
 
   def index
     @users = User.all.paginate(page: params[:page],
-                               per_page: Settings.per_page)
+      per_page: Settings.per_page)
   end
 
   def new
@@ -19,6 +16,10 @@ class Admin::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    unless @user
+      flash[:warning] = t "error_not_exits"
+      redirect_to root_url
+    end
   end
 
   def create
@@ -47,9 +48,9 @@ class Admin::UsersController < ApplicationController
   end
 
   def destroy
-    User.find(params[:id]).destroy
-    flash[:success] = "User deleted"
-    redirect_to users_url
+    @user = User.find(params[:id]).destroy
+    flash[:success] = t "admin.success_destroyed_user"
+    redirect_to [:admin, :users]
   end
 
   def following

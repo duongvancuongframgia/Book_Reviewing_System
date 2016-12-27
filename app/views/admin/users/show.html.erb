@@ -1,0 +1,13 @@
+    <div class="well">
+      <div class="media">
+        <%= link_to get_image_user(@user, "media-object"), @user, :class => "pull-left" %>
+        <div class="media-body">
+          <p>Name: <%= @user.name %></p>
+          <p>Email: <%= @user.email %></p>
+          <p>Admin: <%= @user.is_admin %></p>
+          <p>Created time: <%= @user.created_at %></p>
+          <p>Updated time: <%= @user.updated_at %></p>
+        </div>
+      </div>
+    </div>
+    <hr>

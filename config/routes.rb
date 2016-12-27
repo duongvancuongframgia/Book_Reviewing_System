@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     root "static_pages#home"
     resources :categories, except: [:show]
     resources :books
-    resources :users, only: [:index, :create, :destroy]
+    resources :users, only: [:index, :show, :create, :destroy]
     resources :reviews, only: [:index, :show, :destroy]
   end
   resources :users, except: [:destroy, :index] do
@@ -29,4 +29,9 @@ Rails.application.routes.draw do
   resources :likes, only: [:create, :destroy]
   resources :rates, only: [:create, :update]
   resources :activities, only: [:create, :destroy]
+<<<<<<< HEAD
 end
+=======
+  resources :account_activations, only: [:edit]
+end
+>>>>>>> 289deb3... second
