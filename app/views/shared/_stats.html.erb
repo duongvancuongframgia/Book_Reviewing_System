@@ -2,22 +2,22 @@
 <div class="profile-usermenu">
   <ul class="nav">
     <li class="active">
-      <a href="<%= user_following_index_path user %>">
+      <%= link_to user_following_index_path user do %>
         <i class="glyphicon glyphicon-user"></i>
         <strong id="following" class="stat">
-          <%= user.following.count %>
+          <%= user.following.size %>
         </strong>
         <%= t "views.shared.stat.title_following" %>
-      </a>
+      <% end %>
     </li>
     <li class="active">
-      <a href="<%= user_followers_path user %>">
+      <%= link_to user_followers_path user do %>
         <i class="glyphicon glyphicon-user"></i>
         <strong id="followers" class="stat">
-          <%= user.followers.count %>
+          <%= user.followers.size %>
         </strong>
         <%= t "views.shared.stat.title_follower" %>
-      </a>
+      <% end %>
     </li>
   </ul>
 </div>
