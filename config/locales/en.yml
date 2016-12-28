@@ -1,5 +1,4 @@
 en:
-  admin_book: "Success"
   admin:
     success_destroyed_user: "Success destroy user"
     success_destroyed_book: "Success destroy book"
@@ -90,4 +89,17 @@ en:
     reviews:
       edit:
         submit_bt: "Submit"
+  error_not_exits: "error_not_exits"
+  loi:
+    create_book: "Create Book"
+    edit_book: "Edit_Book"
+    are_you_sure: "Are you sure?"
+    delete: "Delete"
+    edit: "Edit"
+    created_category: "Category created!"
+    updated_category: "Category updated!"
+    edit_category: "Category edit"
+    create_category: "Create category"
+    user_ban: "was Banned"
+    user_unban: "was UnBanned"
 
