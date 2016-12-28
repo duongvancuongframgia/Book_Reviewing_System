@@ -1,12 +1,12 @@
-<% provide(:title, 'Create Categories') %>
-<% provide(:button_text, 'Create my Categories') %>
+<% provide :title, t("loi.edit_category") %>
+<% provide :button_text, t("loi.edit_category") %>
 <% if verify_admin_access? %>
-    <h1>Create Categories</h1>
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3">
-        <div class="form-books">
-          <%= render 'formcategory' %>
-        </div>
+  <h1><%= t("loi.edit_category") %>></h1>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="form-books">
+        <%= render "formcategory" %>
       </div>
     </div>
+  </div>
 <% end %>

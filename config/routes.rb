@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     resources :categories, except: :show
     resources :books
     resources :users
-    resources :reviews, only: [:index, :show, :destroy]
+    resources :reviews, only: [:index, :show, :destroy, :edit]
   end
   resources :users, except: [:destroy, :index] do
     resources :following, only: :index

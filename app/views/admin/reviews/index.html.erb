@@ -1,0 +1,16 @@
+<%= will_paginate @reviews %>
+<% @reviews.each do |review| %>
+    <div class="well">
+      <div class="media">
+        <div class="media-body">
+          <h4 class="media-heading"><%= review.name %></h4>
+          <ul>
+            <%= link_to "Edit", edit_admin_review_path(category) %> |
+            <%= link_to "Delete", [:admin, review], method: :delete, data: {confirm: "are you sure?"} %>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <hr>
+<% end %>
+<%= will_paginate @reviews %>
