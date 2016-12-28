@@ -53,7 +53,8 @@ class ReviewsController < ApplicationController
 
   private
     def review_params
-      params.require(:review).permit :title, :content
+      params.require(:review).permit(:title, :content)
+      .merge! user_id: current_user.id
     end
 
     def load_review
