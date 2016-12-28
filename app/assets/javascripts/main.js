@@ -27,4 +27,32 @@ $(document).on('turbolinks:load',function() {
       }
     });
   });
+
+  $('#bt-favourite').on('click', function() {
+    action = ($(this).val().trim()) === 'favourite' ? 'POST' : 'DELETE';
+    text = ($(this).val().trim()) === 'favourite' ? 'unfollow' : 'Follow';
+    book_id = $('#book_id').val();
+    url = ($(this).val().trim()) === 'favourite' ? '/favourites' : '/favourites/' + book_id;
+    $.ajax({
+      type: action,
+      url : url,
+      dataType: 'json',
+       data: {
+        favourite: {
+          book_id: book_id
+        }
+      },
+      success: function(data) {
+        if ($('#bt-favourite').hasClass('btn btn-circle')) {
+          $('#bt-favourite').removeClass('btn btn-circle').addClass(data.favourite);
+        } else {
+          $('#bt-favourite').removeClass('btn btn-danger btn-circle').addClass(data.favourite);
+        }
+        $('#bt-favourite').val(data.value);
+      },
+      error: function(error_message) {
+        alert('error ' + error_message);
+      }
+    });
+  });
 });

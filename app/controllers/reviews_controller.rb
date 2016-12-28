@@ -24,8 +24,6 @@ class ReviewsController < ApplicationController
     @review = @book.reviews.build review_params
     @review.user_id = current_user.id
     if @review.save
-      current_user.activities.create object_id: @review.id,
-        action_type: Settings.action_type_review
       redirect_back fallback_location: root_path
     end
   end
