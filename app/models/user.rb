@@ -16,6 +16,10 @@ class User < ApplicationRecord
   has_many :active_bookmarks, class_name: Bookmark.name,
     foreign_key: :user_id, dependent: :destroy
   has_many :favouriting, through: :active_bookmarks, source: :book
+  has_many :active_reading, class_name: Reading.name,
+    foreign_key: :user_id, dependent: :destroy
+  has_many :reading, through: :active_reading, source: :book
+  has_many :rates
   has_many :requests
   has_many :comments
   has_many :activities
@@ -26,7 +30,7 @@ class User < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: Settings.max_len }
   attr_accessor :remember_token, :activation_token
-  before_save   :downcase_email
+  before_save :downcase_email
   before_create :create_activation_digest
   validates :name, presence: true, length: { maximum: 50 }
   validates :email, presence: true, format: {with: VALID_EMAIL_REGEX},

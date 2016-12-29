@@ -11,7 +11,7 @@ class Book < ApplicationRecord
   validates :description, presence: true
   validates :publish_date, presence: true, format: { with: VALID_DATE_REGEX}
   validates :author, presence: true
-  
+
   scope :more_rate, ->do
     order(rating: :desc).limit Settings.limit_book
   end
@@ -20,28 +20,23 @@ class Book < ApplicationRecord
   end
   scope :show_newest, ->do
     order(created_at: :desc).limit Settings.limit_book
-  end  
+  end
   scope :filter_newest, ->{order created_at: :desc}
   scope :search_by_title, ->search do
-    where("title LIKE ?", "%#{search}%").limit Settings.limit_book
+    where "title LIKE ?", "%#{search}%"
   end
   scope :filter_title_book_or_author, ->search do
     where "title LIKE ? OR author LIKE ?", "%#{search}%", "%#{search}%"
   end
   scope :search_by_category, ->id do
-    if id
-      where "category_id != ?", id
-    else
-      filter_newest
-    end
+      where category_id: id
   end
   scope :search_name_or_author, ->search do
     filter_title_book_or_author search
   end
   scope :favourite_books, ->id do
     Book.joins("INNER JOIN bookmarks ON books.id = bookmarks.book_id")
-      .where("bookmarks.user_id = ? AND bookmarks.favorite = ?",
-      user_id, true).limit Settings.limit_book
+      .where("bookmarks.user_id = ?", id).limit Settings.limit_book
   end
 
   def book_rate_average

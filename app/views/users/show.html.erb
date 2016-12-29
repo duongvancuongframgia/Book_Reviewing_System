@@ -66,6 +66,10 @@
           <div class="tab-pane" id="panel-list-farorite-book">
             <div class="row clearfix">
               <div class="col-md-12 column">
+                <% @books.each do |book| %>
+                  <%= render partial: "shared/list_book", locals: {book: book} %>
+                <% end %>
+                <%= will_paginate @reviews %>
               </div>
             </div>
           </div>
