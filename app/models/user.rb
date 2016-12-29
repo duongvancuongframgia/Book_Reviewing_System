@@ -1,7 +1,4 @@
 class User < ApplicationRecord
-  
-  mount_uploader :avatar, PictureUploader
-  
   has_many :active_relationships, class_name: Relationship.name,
     foreign_key: :follower_id, dependent: :destroy
   has_many :passive_relationships, class_name: Relationship.name,
@@ -95,10 +92,7 @@ class User < ApplicationRecord
   end
 
   def liking? activity, action_type
-    # @active = Activity.find_by user_id: self.id,
-    #   object_id: activity.id, action_type: action_type
-    @active = Activity.where user_id: id, object_id: activity.id,
-      action_type: action_type
+    @active = Activity.find_by object_id: activity.id, action_type: action_type
     liking.include? @active
   end
 

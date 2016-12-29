@@ -4,60 +4,106 @@
       <ul class="nav navbar-nav navbar-left">
         <%= link_to t("layout_header.logo"), root_path, id: "logo", class: "navbar-brand" %>
       </ul>
+      <%= form_tag books_path, method: "GET", id: "search_book",
+        class: "navbar-form navbar-left" do %>
+        <%= text_field_tag :search %>
+          <div id = "result_search"></div>
+      <% end %>
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to t("layout_header.home"), root_path %></li>
-        <% if verify_admin_access? %>
+          <% if verify_admin_access? %>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                role="button" aria-expanded="false">
                 <%= t "layout_header.users_menu.users" %><span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><%= link_to t("layout_header.users_menu.list_all_users"), admin_users_path %></li>
+                <li>
+                  <%= link_to t("layout_header.users_menu.list_all_users"), admin_users_path %>
+                </li>
               </ul>
             </li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                <%= t "layout_header.categories_menu.categories" %><span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                role="button" aria-expanded="false">
+                <%= t "layout_header.categories_menu.categories" %>
+                <span class="caret"></span>
+              </a>
               <ul class="dropdown-menu" role="menu">
-                <li><%= link_to t("layout_header.categories_menu.list_all_categories"), admin_categories_path %></li>
+                <li>
+                  <%= link_to t("layout_header.categories_menu.list_all_categories"),
+                    admin_categories_path %>
+                </li>
                 <li class="divider"></li>
-                <li><%= link_to t("layout_header.categories_menu.create_category"), new_admin_category_path %></li>
+                <li>
+                  <%= link_to t("layout_header.categories_menu.create_category"),
+                    new_admin_category_path %>
+                </li>
               </ul>
             </li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                <%= t "layout_header.books_menu.books" %><span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                role="button" aria-expanded="false">
+                <%= t "layout_header.books_menu.books" %>
+                <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><%= link_to t("layout_header.books_menu.list_all_books"), admin_books_path %></li>
+                <li>
+                  <%= link_to t("layout_header.books_menu.list_all_books"),
+                    admin_books_path %>
+                </li>
                 <li class="divider"></li>
-                <li><%= link_to t("layout_header.books_menu.create_book"), new_admin_book_path %></li>
+                <li>
+                  <%= link_to t("layout_header.books_menu.create_book"),
+                    new_admin_book_path %>
+                </li>
               </ul>
             </li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%= t "layout_header.account_menu.my_account" %><span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                role="button" aria-expanded="false">
+                <%= t "layout_header.account_menu.my_account" %>
+                <span class="caret"></span>
+              </a>
               <ul class="dropdown-menu" role="menu">
                 <li><%= link_to t("layout_header.account_menu.profile"), current_user %></li>
-                <li><%= link_to t("layout_header.account_menu.setting"), edit_user_path(current_user) %></li>
+                <li>
+                  <%= link_to t("layout_header.account_menu.setting"),
+                    edit_user_path(current_user) %>
+                </li>
                 <li class="divider"></li>
-                <li><%= link_to t("layout_header.account_menu.log_out"), logout_path, method: :delete %></li>
+                <li>
+                  <%= link_to t("layout_header.account_menu.log_out"),
+                    logout_path, method: :delete %>
+                </li>
               </ul>
             </li>
-        <% elsif verify_user_access? %>
+          <% elsif verify_user_access? %>
             <li><%= link_to t("layout_header.list_all_book"), books_path %></li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%= t "layout_header.account_menu.my_account" %><span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                role="button" aria-expanded="false">
+                <%= t "layout_header.account_menu.my_account" %>
+                <span class="caret"></span>
+              </a>
               <ul class="dropdown-menu" role="menu">
                 <li><%= link_to t("layout_header.account_menu.profile"), current_user %></li>
-                <li><%= link_to t("layout_header.account_menu.setting"), edit_user_path(current_user) %></li>
+                <li>
+                  <%= link_to t("layout_header.account_menu.setting"),
+                    edit_user_path(current_user) %>
+                </li>
                 <li class="divider"></li>
-                <li><%= link_to t("layout_header.account_menu.log_out"), logout_path, method: :delete %></li>
+                <li>
+                  <%= link_to t("layout_header.account_menu.log_out"),
+                    logout_path, method: :delete %>
+                </li>
               </ul>
             </li>
-        <% else %>
+          <% else %>
             <li><%= link_to t("layout_header.log_in"), login_path %></li>
             <li><%= link_to t("layout_header.sign_up"), signup_path %></li>
-        <% end %>
+          <% end %>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+            role="button" aria-expanded="false">
             <%= t "layout_header.support_menu.supports" %><span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><%= link_to t("layout_header.support_menu.help"), help_path %></li>

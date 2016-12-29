@@ -7,7 +7,8 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       if user.activated?
         log_in user
-        params[:session][:remember_me] == Setting.remember_me ? remember user : forget user
+        params[:session][:remember_me] == Setting.remember_me ?
+          remember(user) : forget(user)
         redirect_back_or user
       else
         message = t "admin.banned_info"

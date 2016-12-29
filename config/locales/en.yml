@@ -122,6 +122,7 @@ en:
         list_read: "List Read Books"
         title: "Title: "
         content: "Content: "
+        update_image_bt: "Upload"
     shared:
       error_message:
         error: "The form contains"
@@ -168,5 +169,6 @@ en:
     reviews:
       edit:
         submit_bt: "Submit"
+        bt_review: "Send review"
   error_not_exits: "error_not_exits"
   js_max_pic_size: "Maximum file size is 5MB. Please choose a smaller file."
