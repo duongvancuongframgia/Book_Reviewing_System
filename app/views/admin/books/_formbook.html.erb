@@ -1,4 +1,4 @@
-<%= form_for [:admin, @book] do |f| %>
+<%= form_for [:admin, @book], html: {multipart: true} do |f| %>
   <%= render "shared/error_messages" , object: @book %>
   <div>
     <%= f.label :title %>
@@ -18,7 +18,7 @@
   </div>
   <div>
     <%= f.label :image %>
-    <%= f.text_field :image, class: "form-control" %>
+    <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", class: "form-control" %>
   </div>
   <div>
     <%= f.label :page %>
@@ -35,7 +35,15 @@
 
   <div>
     <%= f.submit yield(:button_text), class: "btn btn-primary",
-      id: "btn_book" %>
+        id: "btn_book" %>
     <%= link_to t(".cancel"), :back, class: "btn btn-default" %>
   </div>
 <% end %>
+<script type="text/javascript">
+  $("#book_image").bind("change", function() {
+    var size_in_megabytes = this.files[0].size/1024/1024;
+    if (size_in_megabytes > 5) {
+      alert(<%= t "js_max_pic_size" %>);
+    }
+  });
+</script>

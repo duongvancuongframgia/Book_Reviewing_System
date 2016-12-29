@@ -5,8 +5,8 @@
       <div class="media-body">
         <h4 class="media-heading"><%= category.name %></h4>
         <ul>
-          <%= link_to t("loi.edit"), edit_admin_category_path(category) %> |
-          <%= link_to t("loi.delete"), [:admin, category], method: :delete, data: {confirm: t("loi.are_you_sure")} %>
+          <%= link_to t("admin.edit"), edit_admin_category_path(category) %> |
+          <%= link_to t("admin.delete"), [:admin, category], method: :delete, data: {confirm: t("admin.are_you_sure")} %>
         </ul>
       </div>
     </div>

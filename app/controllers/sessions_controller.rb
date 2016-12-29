@@ -3,15 +3,15 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by(email: params[:session][:email].downcase)
+    user = User.find_by email: params[:session][:email].downcase
     if user && user.authenticate(params[:session][:password])
       if user.activated?
         log_in user
-        params[:session][:remember_me] == '1' ? remember(user) : forget(user)
+        params[:session][:remember_me] == Setting.remember_me ?
+          remember(user) : forget(user)
         redirect_back_or user
       else
-        message  = "Your account has been banned. "
-        message += "Contact with admin for more information."
+        message = t "admin.banned_info"
         flash[:warning] = message
         redirect_to root_url
       end

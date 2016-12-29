@@ -9,17 +9,17 @@
           <ul class="nav nav-tabs">
             <li class="active">
               <a href="#panel-list-reviews" data-toggle="tab">
-                <%= t "views.users.show.list_reviews"%>
+                <%= t "views.users.show.list_reviews" %>
               </a>
             </li>
             <li>
               <a href="#panel-list-farorite-book" data-toggle="tab">
-                <%= t "views.users.show.list_favorite"%>
+                <%= t "views.users.show.list_favorite" %>
               </a>
             </li>
             <li>
               <a href="#panel-list-read-book" data-toggle="tab">
-                <%= t "views.users.show.list_read"%>
+                <%= t "views.users.show.list_read" %>
               </a>
             </li>
           </ul>
@@ -33,25 +33,25 @@
                     <%= link_to image_tag(review.user.avatar,
                       class: "media-object",
                       size: Settings.max_size_avatar_show_review),
-                      review.user, :class => "pull-left" %>
+                      review.user, class: "pull-left" %>
                     <div class="media-body">
-                      <h4 class="media-heading"><%= t "views.users.show.title"%><%= review.title %></h4>
-                      <p><%= t "views.users.show.content"%></p>
+                      <h4 class="media-heading"><%= review.title %></h4>
+                      <p><%= t "views.users.show.content" %></p>
                       <p><%= simple_format review.content %></p>
                       <ul class="list-inline list-unstyled">
                         <li>
                           <span>
                             <i class="glyphicon glyphicon-calendar"></i>
-                            <%= "#{review.created_at}" %>
+                            <%= "#{time_ago_in_words(review.created_at)}" %>
                           </span>
                         </li>
                         <% if logged_in? %>
                           <li>|</li>
                           <span id="like-form-<%= review.id %>">
-                            <% unless current_user.liking?(review, Settings.action_type_review)%>
-                              <%= render partial: "shared/like", locals: {object: review} if logged_in?%>
+                            <% unless current_user.liking? review, Activity.action_types[:review] %>
+                              <%= render partial: "shared/like", locals: {object: review} if logged_in? %>
                             <% else %>
-                              <%= render partial: "shared/dislike", locals: {object: review} if logged_in?%>
+                              <%= render partial: "shared/dislike", locals: {object: review} if logged_in? %>
                             <% end %>
                           </span>
                         <% end %>
@@ -66,6 +66,10 @@
           <div class="tab-pane" id="panel-list-farorite-book">
             <div class="row clearfix">
               <div class="col-md-12 column">
+                <% @books.each do |book| %>
+                  <%= render partial: "shared/list_book", locals: {book: book} %>
+                <% end %>
+                <%= will_paginate @reviews %>
               </div>
             </div>
           </div>
