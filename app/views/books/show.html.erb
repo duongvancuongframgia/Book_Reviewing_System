@@ -52,9 +52,9 @@
       <% end %>
     </div>
     <div class="review-block-rate">
-      <a class="btn icon-btn btn-success" href="#">
+      <a class="btn icon-btn btn-success">
         <span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success">
-        </span>Read</a>
+        </span>Reading</a>
     </div>
     <div class="review-block-title"><%= @book.title %></div>
     <div class="review-block-description">
@@ -82,7 +82,7 @@
             <li>|</li>
             <span id="like-form-<%= review.id %>">
               <% if logged_in? %>
-                <% unless current_user.liking?(review, 1)%>
+                <% unless current_user.liking?(review, Activity.action_types[:review])%>
                   <%= render partial: "shared/like", locals: {object: review} if logged_in?%>
                 <% else %>
                   <%= render partial: "shared/dislike", locals: {object: review} if logged_in?%>

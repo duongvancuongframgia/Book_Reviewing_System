@@ -1,45 +1,43 @@
 <%= will_paginate @books %>
 <% @books.each do |book| %>
   <div class="well">
-      <div class="media">
-      <%= link_to get_image(book, "media-object"), book, :class => "pull-left" %>
+    <div class="media">
+      <%= link_to get_image(book, "media-object"), book, class: "pull-left" %>
       <div class="media-body">
         <h4 class="media-heading"><%= book.title %></h4>
-          <p class="text-right"><%= book.author %></p>
-          <p><%= truncate(book.description, :length => 150) %>
-        <%= link_to "read more", book %></p>
-          <ul class="list-inline list-unstyled">
-        <li><span><i class="glyphicon glyphicon-calendar"></i> <%= book.publish_date %> </span></li>
-            <li>|</li>
-            <span><i class="glyphicon glyphicon-comment"></i> 2 comments</span>
-            <li>|</li>
-            <li>
-              <% i = 1 %>
-              <% while i <= book.rating.floor do %>
-                <span class="glyphicon glyphicon-star"></span>
-                <% i += 1 %>
+        <p class="text-right"><%= book.author %></p>
+        <p><%= truncate(book.description, length: Settings.max_len_description) %>
+        <ul class="list-inline list-unstyled">
+          <li><span><i class="glyphicon glyphicon-calendar"></i><%= book.publish_date %></span></li>
+          <li>|</li>
+          <li>
+            <% i = 1 %>
+            <% while i <= book.rating.floor do %>
+              <span class="glyphicon glyphicon-star"></span>
+              <% i += 1 %>
+            <% end %>
+            <% if book.rating.floor < Settings.max_rate %>
+              <% j = 1 %>
+              <% while j <= Settings.max_rate - book.rating.floor do %>
+                <span class="glyphicon glyphicon-star-empty"></span>
+                <% j += 1 %>
               <% end %>
-              <% if book.rating.floor < 5%>
-                <% j = 1 %>
-                <% while j <= 5 - book.rating.floor do %>
-                  <span class="glyphicon glyphicon-star-empty"></span>
-                  <% j += 1 %>
-                <% end %>
-              <% end %>
-              <label><%= book.rating %>-</label>              
-            </li>
-            <%= link_to 'Edit', edit_admin_book_path(book) %>
-            <li> 
-            <%= link_to "Delete", [:admin, book], method: :delete, data: {confirm: "are you sure?"} %></li>
-            <li>            
-              <span><i class="fa fa-facebook-square"></i></span>
-              <span><i class="fa fa-twitter-square"></i></span>
-              <span><i class="fa fa-google-plus-square"></i></span>
-            </li>
-      </ul>
-       </div>
+            <% end %>
+            <label><%= book.rating %></label>
+          <li>|</li>
+          </li>
+          <%= link_to t("admin.edit"), edit_admin_book_path(book) %>
+          <li>
+            <%= link_to t("admin.delete"), [:admin, book], method: :delete, data: {confirm: t("admin.are_you_sure")} %></li>
+          <li>
+            <span><i class="fa fa-facebook-square"></i></span>
+            <span><i class="fa fa-twitter-square"></i></span>
+            <span><i class="fa fa-google-plus-square"></i></span>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
-  <hr>  
+  <hr>
 <% end %>
 <%= will_paginate @books %>

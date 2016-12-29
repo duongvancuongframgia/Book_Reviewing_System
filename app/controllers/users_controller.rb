@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
+  before_action :logged_in_user, only: [:index, :edit, :update]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: :destroy
   before_action :load_user, except: [:new, :create]
@@ -18,6 +18,7 @@ class UsersController < ApplicationController
 
   def show
     @reviews = @user.reviews.paginate page: params[:page]
+    @books = @user.favouriting.paginate page: params[:page]
   end
 
   def create
@@ -42,13 +43,7 @@ class UsersController < ApplicationController
       render :edit
     end
   end
-
-  def destroy
-    User.find(params[:id]).destroy
-    flash[:success] = t "app.controllers.user.delete_success"
-    redirect_to users_url
-  end
-
+  
   private
   def user_params
     params.require(:user).permit :name, :email,
