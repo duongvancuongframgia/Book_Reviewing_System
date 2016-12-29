@@ -3,9 +3,7 @@ class Review < ApplicationRecord
   belongs_to :book
 
   has_many  :comments, dependent: :destroy
-  has_many :passive_likes, class_name: Like.name,
-    foreign_key: :review_id, dependent: :destroy
-  has_many :comments
+  has_many  :comments
 
   validates :title, presence: true, length: {maximum: Settings.max_len_name}
   validates :content, presence: true
@@ -18,7 +16,7 @@ class Review < ApplicationRecord
 
   private
   def activity_review
-    user.activities.create! object_id: self.id,
+    user.activities.create object_id: id,
       action_type: Settings.action_type_review
   end
 end

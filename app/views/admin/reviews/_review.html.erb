@@ -1,0 +1,8 @@
+<hr>
+<h4 class="media-heading"><%= review.title %></h4>
+<ul>
+  <%= link_to "Edit", edit_admin_review_path(review) %> |
+  <%= link_to "Delete", [:admin, review], method: :delete, data: {confirm: "are you sure?"} %>
+</ul>
+<hr>
+
