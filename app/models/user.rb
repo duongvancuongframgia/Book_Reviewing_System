@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  
+  mount_uploader :avatar, PictureUploader
+  
   has_many :active_relationships, class_name: Relationship.name,
     foreign_key: :follower_id, dependent: :destroy
   has_many :passive_relationships, class_name: Relationship.name,
@@ -23,10 +26,11 @@ class User < ApplicationRecord
   has_many :requests
   has_many :comments
   has_many :activities
-
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   mount_uploader :avatar, PictureUploader
   has_secure_password
+
+  scope :all_except, ->(user) { where.not(id: user) }
 
   validates :name, presence: true, length: { maximum: Settings.max_len }
   attr_accessor :remember_token, :activation_token
@@ -37,7 +41,7 @@ class User < ApplicationRecord
     uniqueness: {case_sensitive: false}
   validates :password, presence: true,
     length: {minimum: Settings.min_len_pass}, allow_blank: true
-  validate  :picture_size
+  validate  :image_size
 
   def User.digest string
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
@@ -156,7 +160,7 @@ class User < ApplicationRecord
     self.activation_digest = User.digest(activation_token)
   end
 
-  def picture_size
+  def image_size
     if avatar.size > 5.megabytes
       errors.add(:avatar, "should be less than 5MB")
     end
