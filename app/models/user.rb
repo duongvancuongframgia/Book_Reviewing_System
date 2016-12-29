@@ -39,8 +39,6 @@ class User < ApplicationRecord
     length: {minimum: Settings.min_len_pass}, allow_blank: true
   validate  :picture_size
 
-  scope :all_except, ->(user) { where.not(id: user) }
-
   def User.digest string
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
       BCrypt::Engine.cost
@@ -136,7 +134,7 @@ class User < ApplicationRecord
 
   def get_like object, action_type
     @actity = Activity.find_by object_id: object.id, action_type: action_type
-    return Like.find_by activity_id: @actity.id
+    Like.find_by activity_id: @actity.id
   end
 
   def get_rating user, book

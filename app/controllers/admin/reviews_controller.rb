@@ -35,7 +35,7 @@ class Admin::ReviewsController < ApplicationController
   
   def destroy
     @review.destroy
-    redirect_to root_path
+    redirect_to :back
   end
   
   private
@@ -46,7 +46,7 @@ class Admin::ReviewsController < ApplicationController
   def load_review
     @review = Review.find_by id: params[:id]
     unless @review
-      flash[:warning] = t "app.not_exits"
+      flash[:warning] = t "error_not_exits"
       redirect_to root_url
     end
   end

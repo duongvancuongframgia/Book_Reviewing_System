@@ -17,7 +17,7 @@ class Admin::BooksController < ApplicationController
   def create
     @book = Book.new book_params
     if @book.save
-      flash[:success] = "abc"
+      flash[:success] = t "admin.created_book"
       redirect_to [:admin, :books]
     else
       render :new
@@ -36,8 +36,11 @@ class Admin::BooksController < ApplicationController
   end
   
   def destroy
-    @book.destroy
-    flash[:success] = t "admin.success_destroyed_book"
+    if @book.destroy
+      flash[:success] = t "admin.success_destroyed_book"
+    else
+	    flash[:success] = t "admin.unsuccess_destroyed_book"
+	  end
     redirect_to [:admin, :books]
   end
   
