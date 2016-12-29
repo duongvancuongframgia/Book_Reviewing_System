@@ -5,24 +5,24 @@ class BooksController < ApplicationController
   def index
     @books = Book.filter_newest.paginate page: params[:page],
       per_page: Settings.per_page
-  end
-
-  def index_search
-    @books_search_by_title = Book.search_by_title.paginate(page: params[:page])
-      .newest
-    if params[:category].blank?
-      @books = Book.newest.paginate page: params[:page],
-        per_page: Settings.per_page
-    else
-      @category = Category.find_by id: params[:category]
-      unless @category
-        flash[:danger] = t "app.not_exits"
-        redirect_to books_path
-      else
-        @books = @category.books.newest.paginate page: params[:page],
-          per_page: Settings.per_page
-      end
+    unless params[:search].blank?
+      @books = Book.search_by_title(params[:search]).filter_newest.paginate page: params[:page],
+      per_page: Settings.per_page
     end
+    # @books = Book.search_by_title(params[:search]).filter_newest
+    # if params[:category].blank?
+    #   @books = Book.filter_newest.paginate page: params[:page],
+    #     per_page: Settings.per_page
+    # else
+    #   @category = Category.find_by id: params[:category]
+    #   unless @category
+    #     flash[:danger] = t "record_isnt_exist"
+    #     redirect_to books_path
+    #   else
+    #     @books = @category.books.filter_newest.paginate page: params[:page],
+    #       per_page: Settings.per_page
+    #   end
+    # end
   end
 
   def show
