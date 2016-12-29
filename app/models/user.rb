@@ -99,7 +99,7 @@ class User < ApplicationRecord
   end
 
   def liking? activity, action_type
-    @active = Activity.find_by user_id: self.id,
+    @active = Activity.find_by user_id: id,
       object_id: activity.id, action_type: action_type
     liking.include? @active
   end

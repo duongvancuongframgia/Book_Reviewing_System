@@ -6,8 +6,8 @@ size_image: 5
 alert_size_image: "should be less than 5MB"
 max_len: 50
 min_len_pass: 6
-action_type_comment: 2
-action_type_review: 1
+action_type_comment: 1
+action_type_review: 0
 size_image_book: 140
 size_image_avater: 100
 max_len_name: 100

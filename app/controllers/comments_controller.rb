@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new comment_params
     if @comment.save
       current_user.activities.create object_id: @comment.id,
-        action_type: Settings.action_type_comment
+        action_type: Activity.action_types[:comment]
       respond_to do |format|
         format.js
       end
@@ -41,7 +41,7 @@ class CommentsController < ApplicationController
 
   private
     def comment_params
-      params.require(:comment).permit(:content).merge user_id: current_user.id,
+      params.require(:comment).permit(:content).merge! user_id: current_user.id,
         review_id: params[:review_id]
     end
 
