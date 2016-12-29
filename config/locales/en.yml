@@ -29,6 +29,8 @@ en:
     status_unban: "Status Unban: "
     created_time_user: "Created time: "
     updated_time_user: "Updated time: "
+    account_unban: "Account unban"
+    account_invalid: "account invalid"
   static_pages:
     home:
       title_welcome: "Welcome to Books System"
