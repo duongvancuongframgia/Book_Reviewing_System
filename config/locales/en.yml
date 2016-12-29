@@ -21,6 +21,14 @@ en:
     user_ban: "was Banned"
     user_unban: "was UnBanned"
     created_book: "Book created!"
+    detail_user: "Detail User"
+    ban_user: "Ban User"
+    name_user: "Name: "
+    email_user: "Email: "
+    admin_user: "Admin: "
+    status_unban: "Status Unban: "
+    created_time_user: "Created time: "
+    updated_time_user: "Updated time: "
   static_pages:
     home:
       title_welcome: "Welcome to Books System"
@@ -66,6 +74,14 @@ en:
       help: "Help"
       about: "About"
       contact: "Contact"
+  layout_slide:
+    title: "We are creative"
+    content_title: "Get start your next awesome project"
+    See_all_features: "See all features"
+    we_are_smart: "We are smart"
+    get_start: "Get start your next awesome project"
+    we_are_amazing: "We are amazing"
+    content: "Get start your next awesome project"
   app:
     not_exits: "Not Exits"
     controllers:
