@@ -32,8 +32,6 @@ class User < ApplicationRecord
 
   scope :all_except, ->(user) { where.not(id: user) }
 
-  scope :all_except, ->(user) { where.not(id: user) }
-
   def User.digest string
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
       BCrypt::Engine.cost
@@ -117,7 +115,7 @@ class User < ApplicationRecord
 
   def get_like object, action_type
     @actity = Activity.find_by object_id: object.id, action_type: action_type
-    return Like.find_by activity_id: @actity.id
+    Like.find_by activity_id: @actity.id
   end
 
   def get_rating user, book
@@ -130,29 +128,10 @@ class User < ApplicationRecord
   end
 
   private
-  # Converts email to all lower-case.
   def downcase_email
     self.email = email.downcase
   end
 
-  # Creates and assigns the activation token and digest.
-  def create_activation_digest
-    self.activation_token  = User.new_token
-    self.activation_digest = User.digest(activation_token)
-  end
-
-  def activate
-    update_attribute(:activated,    true)
-    update_attribute(:activated_at, Time.zone.now)
-  end
-
-  private
-  # Converts email to all lower-case.
-  def downcase_email
-    self.email = email.downcase
-  end
-
-  # Creates and assigns the activation token and digest.
   def create_activation_digest
     self.activation_token  = User.new_token
     self.activation_digest = User.digest(activation_token)

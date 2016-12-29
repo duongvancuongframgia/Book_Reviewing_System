@@ -27,9 +27,9 @@
               <label><%= book.rating %></label>
             <li>|</li>
             </li>
-            <%= link_to t("loi.edit"), edit_admin_book_path(book) %>
+            <%= link_to t("admin.edit"), edit_admin_book_path(book) %>
             <li>
-            <%= link_to t("loi.delete"), [:admin, book], method: :delete, data: {confirm: t("loi.are_you_sure")} %></li>
+            <%= link_to t("admin.delete"), [:admin, book], method: :delete, data: {confirm: t("admin.are_you_sure")} %></li>
             <li>
               <span><i class="fa fa-facebook-square"></i></span>
               <span><i class="fa fa-twitter-square"></i></span>

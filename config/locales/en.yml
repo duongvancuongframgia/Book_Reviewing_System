@@ -1,6 +1,7 @@
 en:
   admin:
     success_destroyed_user: "Success destroy user"
+    unsuccess_destroyed_user: "UnSuccess destroy user"
     success_destroyed_book: "Success destroy book"
     unsuccess_destroyed_book: "Unsuccess destroy book"
     success_updated_book: "Success updated book"
@@ -8,6 +9,63 @@ en:
     unsuccess_destroyed_category: "UnSuccess destroy category"
     success_updated_category: "Success updated category"
     category_updated_success: "Category_updated_success"
+    create_book: "Create Book"
+    edit_book: "Edit_Book"
+    are_you_sure: "Are you sure?"
+    delete: "Delete"
+    edit: "Edit"
+    created_category: "Category created!"
+    updated_category: "Category updated!"
+    edit_category: "Category edit"
+    create_category: "Create category"
+    user_ban: "was Banned"
+    user_unban: "was UnBanned"
+    created_book: "Book created!"
+  static_pages:
+    home:
+      title_welcome: "Welcome to Books System"
+      content_welcome: "This is the home page for the"
+      books_system: "Books System"
+      newest: "Newest"
+      hot: "Hot"
+    help:
+      title: "Help"
+      content: "Get help on the System administrator at the"
+      admin_link: "admin"
+    contact:
+      title: "Contact"
+      content: "Contact the administrator about the Book Review System at the"
+      contact_link: "Contact page"
+    about:
+      title: "About"
+      content: "This is about page."
+  layout_header:
+    logo: "BOOK SYSTEM"
+    home: "Home"
+    list_all_book: "List All Books"
+    log_in: "Log in"
+    sign_up: "Sign Up"
+    users_menu:
+      users: "Users"
+      list_all_users: "List All Users"
+    categories_menu:
+      categories: "Categories"
+      list_all_categories: "List All Categories"
+      create_category: "Create category"
+    books_menu:
+      books: "Books"
+      list_all_books: "List All Books"
+      create_book: "Create Book"
+    account_menu:
+      my_account: "My Account"
+      profile: "Profile"
+      setting: "Settings"
+      log_out: "Log out"
+    support_menu:
+      supports: "Supports"
+      help: "Help"
+      about: "About"
+      contact: "Contact"
   app:
     not_exits: "Not Exits"
     controllers:
@@ -90,16 +148,3 @@ en:
       edit:
         submit_bt: "Submit"
   error_not_exits: "error_not_exits"
-  loi:
-    create_book: "Create Book"
-    edit_book: "Edit_Book"
-    are_you_sure: "Are you sure?"
-    delete: "Delete"
-    edit: "Edit"
-    created_category: "Category created!"
-    updated_category: "Category updated!"
-    edit_category: "Category edit"
-    create_category: "Create category"
-    user_ban: "was Banned"
-    user_unban: "was UnBanned"
-
