@@ -99,6 +99,8 @@ en:
         title_following: "Following"
       session:
         login_error: "Invalid email/password combination"
+      reviews:
+        error_create: "Can't create review"
     helpers:
       application:
         base_title: "Ruby on Rails Tutorial Sample App"

@@ -2,7 +2,7 @@ class Like < ApplicationRecord
   belongs_to :user
   belongs_to :activity
 
-  validates :user_id, presence: true
-  validates :activity_id, presence: true
-  validates :user_id, uniqueness: { scope: :activity_id }
+  validates :user, presence: true
+  validates :activity, presence: true
+  validates :user_id, uniqueness: {scope: :activity_id}
 end

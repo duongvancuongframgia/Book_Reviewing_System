@@ -44,9 +44,9 @@ $(document).on('turbolinks:load',function() {
       },
       success: function(data) {
         if ($('#bt-favourite').hasClass('btn btn-circle')) {
-          $('#bt-favourite').removeClass('btn btn-circle').addClass(data.favourite);
+          $('#bt-favourite').removeClass('btn btn-circle').addClass('btn btn-danger btn-circle');
         } else {
-          $('#bt-favourite').removeClass('btn btn-danger btn-circle').addClass(data.favourite);
+          $('#bt-favourite').removeClass('btn btn-danger btn-circle').addClass('btn btn-circle');
         }
         $('#bt-favourite').val(data.value);
       },

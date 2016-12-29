@@ -48,7 +48,7 @@
                         <% if logged_in? %>
                           <li>|</li>
                           <span id="like-form-<%= review.id %>">
-                            <% unless current_user.liking?(review, Settings.action_type_review)%>
+                            <% unless current_user.liking?(review, Activity.action_types[:review])%>
                               <%= render partial: "shared/like", locals: {object: review} if logged_in?%>
                             <% else %>
                               <%= render partial: "shared/dislike", locals: {object: review} if logged_in?%>

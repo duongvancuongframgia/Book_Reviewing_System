@@ -1,30 +1,31 @@
 class RelationshipsController < ApplicationController
   before_action :logged_in_user
+  before_action :load_user
 
   def create
-    @user = User.find_by id: params[:relationship][:id]
-    unless @user
-      flash[:warning] = t "app.not_exits"
-      redirect_to root_url
-    end
-    relationship = current_user.follow @user
-    respond_to do |format|
-      format.json do
-        render json: {status: "OK",followers: @user.followers.size, following: @user.following.size}
-      end
-    end
+    current_user.follow @user
+    send_respond @user
   end
 
   def destroy
+    current_user.unfollow @user
+    send_respond @user
+  end
+
+  private
+  def load_user
     @user = User.find_by id: params[:relationship][:id]
     unless @user
       flash[:warning] = t "app.not_exits"
       redirect_to root_url
     end
-    current_user.unfollow @user
+  end
+
+  def send_respond object
     respond_to do |format|
       format.json do
-        render json: {status: "OK",followers: @user.followers.size, following: @user.following.size}
+        render json: {followers: object.followers.size,
+          following: object.following.size}
       end
     end
   end

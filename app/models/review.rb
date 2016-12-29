@@ -7,8 +7,8 @@ class Review < ApplicationRecord
 
   validates :title, presence: true, length: {maximum: Settings.max_len_name}
   validates :content, presence: true
-  validates :book_id, presence: true
-  validates :user_id, presence: true
+  validates :book, presence: true
+  validates :user, presence: true
 
   after_save :activity_review
 
@@ -17,6 +17,6 @@ class Review < ApplicationRecord
   private
   def activity_review
     user.activities.create object_id: id,
-      action_type: Settings.action_type_review
+      action_type: Activity.action_types[:review]
   end
 end

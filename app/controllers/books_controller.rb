@@ -6,8 +6,8 @@ class BooksController < ApplicationController
     @books = Book.filter_newest.paginate page: params[:page],
       per_page: Settings.per_page
     unless params[:search].blank?
-      @books = Book.search_by_title(params[:search]).filter_newest.paginate page: params[:page],
-      per_page: Settings.per_page
+      @books = Book.search_by_title(params[:search]).filter_newest
+        .paginate page:params[:page], per_page: Settings.per_page
     end
     # @books = Book.search_by_title(params[:search]).filter_newest
     # if params[:category].blank?

@@ -3,5 +3,5 @@ class Request < ApplicationRecord
 
   validates :book_title, presence: true,
     length: {maximum: Settings.max_len_name}
-  validates :user_id, presence: true
+  validates :user, presence: true
 end
