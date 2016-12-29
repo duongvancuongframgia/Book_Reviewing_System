@@ -1,7 +1,6 @@
 <hr>
 <h4 class="media-heading"><%= review.title %></h4>
 <ul>
-  <%= link_to t("admin.edit"), edit_admin_review_path(review) %> |
   <%= link_to t("admin.delete"), [:admin, review], method: :delete, data: {confirm: t("admin.are_you_sure")} %>
 </ul>
 <hr>
