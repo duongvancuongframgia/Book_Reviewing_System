@@ -20,20 +20,20 @@ class LikesController < ApplicationController
   end
 
   private
-    def load_review
-      @review = Review.find_by id: params[:object_id]
-      unless @review
-        flash[:warning] = t "app.not_exits"
-        redirect_to root_url
-      end
+  def load_review
+    @review = Review.find_by id: params[:object_id]
+    unless @review
+      flash[:warning] = t "app.not_exits"
+      redirect_to root_url
     end
+  end
 
-    def load_activity
-      @activity = Activity.find_by object_id: params[:object_id],
-        action_type: params[:action_type]
-      unless @activity
-        flash[:warning] = t "app.not_exits"
-        redirect_to root_url
-      end
+  def load_activity
+    @activity = Activity.find_by object_id: params[:object_id],
+      action_type: params[:action_type]
+    unless @activity
+      flash[:warning] = t "app.not_exits"
+      redirect_to root_url
     end
+  end
 end

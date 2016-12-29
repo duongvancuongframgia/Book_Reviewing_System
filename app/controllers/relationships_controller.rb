@@ -10,7 +10,7 @@ class RelationshipsController < ApplicationController
     relationship = current_user.follow @user
     respond_to do |format|
       format.json do
-        render json: {status: "OK"}
+        render json: {status: "OK",followers: @user.followers.size, following: @user.following.size}
       end
     end
   end
@@ -24,7 +24,7 @@ class RelationshipsController < ApplicationController
     current_user.unfollow @user
     respond_to do |format|
       format.json do
-        render json: {status: "OK"}
+        render json: {status: "OK",followers: @user.followers.size, following: @user.following.size}
       end
     end
   end

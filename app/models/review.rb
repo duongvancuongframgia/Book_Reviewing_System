@@ -10,5 +10,13 @@ class Review < ApplicationRecord
   validates :book_id, presence: true
   validates :user_id, presence: true
 
+  after_save :activity_review
+
   scope :newest, ->{order created_at: :desc}
+
+  private
+  def activity_review
+    user.activities.create object_id: id,
+      action_type: Settings.action_type_review
+  end
 end
