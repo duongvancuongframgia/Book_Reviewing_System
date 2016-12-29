@@ -43,9 +43,13 @@
       <% end %>
     </div>
     <div class="review-block-rate">
-      <button type="button" class="btn btn-danger btn-circle">
-        <i class="glyphicon glyphicon-heart"></i>
-      </button>
+      <% if logged_in? %>
+        <% if current_user.favouriting? @book%>
+          <%= render partial: "shared/unfavourite", locals: {book: @book} %>
+        <% else %>
+          <%= render partial: "shared/favourite", locals: {book: @book} %>
+        <% end %>
+      <% end %>
     </div>
     <div class="review-block-rate">
       <a class="btn icon-btn btn-success" href="#">
