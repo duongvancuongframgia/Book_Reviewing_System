@@ -1,3 +1,0 @@
-module LikesHelper
-  
-end

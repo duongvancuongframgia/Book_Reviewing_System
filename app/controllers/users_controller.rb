@@ -18,6 +18,7 @@ class UsersController < ApplicationController
 
   def show
     @reviews = @user.reviews.paginate page: params[:page]
+    @books = @user.favouriting.paginate page: params[:page]
   end
 
   def create
@@ -48,18 +49,6 @@ class UsersController < ApplicationController
     flash[:success] = t "app.controllers.user.delete_success"
     redirect_to users_url
   end
-
-  # def following
-  #   @title = t "app.controllers.user.title_following"
-  #   @users = @user.following.paginate page: params[:page]
-  #   render "show_follow"
-  # end
-
-  # def followers
-  #   @title = t "app.controllers.user.title_follower"
-  #   @users = @user.followers.paginate page: params[:page]
-  #   render "show_follow"
-  # end
 
   private
   def user_params

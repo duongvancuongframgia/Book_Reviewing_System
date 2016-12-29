@@ -13,24 +13,31 @@ class User < ApplicationRecord
     foreign_key: :user_id, dependent: :destroy
   has_many :rating, through: :active_rates, source: :book
   has_many :reviews, dependent: :destroy
+  has_many :active_bookmarks, class_name: Bookmark.name,
+    foreign_key: :user_id, dependent: :destroy
+  has_many :favouriting, through: :active_bookmarks, source: :book
+  has_many :active_reading, class_name: Reading.name,
+    foreign_key: :user_id, dependent: :destroy
+  has_many :reading, through: :active_reading, source: :book
+  has_many :rates
   has_many :requests
   has_many :comments
   has_many :activities
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  mount_uploader :avatar, PictureUploader
   has_secure_password
 
   validates :name, presence: true, length: { maximum: Settings.max_len }
   attr_accessor :remember_token, :activation_token
-  before_save   :downcase_email
+  before_save :downcase_email
   before_create :create_activation_digest
   validates :name, presence: true, length: { maximum: 50 }
   validates :email, presence: true, format: {with: VALID_EMAIL_REGEX},
     uniqueness: {case_sensitive: false}
   validates :password, presence: true,
     length: {minimum: Settings.min_len_pass}, allow_blank: true
-
-  scope :all_except, ->(user) { where.not(id: user) }
+  validate  :picture_size
 
   def User.digest string
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
@@ -47,7 +54,7 @@ class User < ApplicationRecord
     update_attributes remember_digest: User.digest(remember_token)
   end
 
-  def authenticated?(attribute, token)
+  def authenticated? attribute, token
     digest = send("#{attribute}_digest")
     return false if digest.nil?
     BCrypt::Password.new(digest).is_password?(token)
@@ -66,7 +73,7 @@ class User < ApplicationRecord
   end
 
   def following? other_user
-    following.include?other_user
+    following.include? other_user
   end
 
   scope :favourite_books, ->user_id do
@@ -94,13 +101,25 @@ class User < ApplicationRecord
   end
 
   def liking? activity, action_type
-    @active = Activity.find_by user_id: User.ids,
+    @active = Activity.find_by user_id: self.id,
       object_id: activity.id, action_type: action_type
-    liking.include?@active
+    liking.include? @active
+  end
+
+  def favourite book
+    active_bookmarks.create book_id: book.id
+  end
+
+  def unfavourite book
+    active_bookmarks.find_by(book_id: book.id).destroy
+  end
+
+  def favouriting? book
+    favouriting.include? book
   end
 
   def rating? book
-    rating.include?book
+    rating.include? book
   end
 
   def rate book, num_rate
@@ -123,7 +142,7 @@ class User < ApplicationRecord
   end
 
   def activate
-    update_attribute(:activated,    true)
+    update_attribute(:activated, true)
     update_attribute(:activated_at, Time.zone.now)
   end
 
@@ -135,5 +154,11 @@ class User < ApplicationRecord
   def create_activation_digest
     self.activation_token  = User.new_token
     self.activation_digest = User.digest(activation_token)
+  end
+
+  def picture_size
+    if avatar.size > 5.megabytes
+      errors.add(:avatar, "should be less than 5MB")
+    end
   end
 end

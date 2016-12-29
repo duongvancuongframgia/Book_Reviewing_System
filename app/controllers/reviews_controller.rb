@@ -24,8 +24,6 @@ class ReviewsController < ApplicationController
     @review = @book.reviews.build review_params
     @review.user_id = current_user.id
     if @review.save
-      current_user.activities.create object_id: @review.id,
-        action_type: Settings.action_type_review
       redirect_back fallback_location: root_path
     end
   end
@@ -55,7 +53,8 @@ class ReviewsController < ApplicationController
 
   private
     def review_params
-      params.require(:review).permit :title, :content
+      params.require(:review).permit(:title, :content)
+      .merge! user_id: current_user.id
     end
 
     def load_review

@@ -1,4 +1,4 @@
-class Bookmark < ApplicationRecord
+class Reading < ApplicationRecord
   belongs_to :user
   belongs_to :book
 
