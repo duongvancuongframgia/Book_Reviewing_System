@@ -31,6 +31,7 @@ en:
     updated_time_user: "Updated time: "
     account_unban: "Account unban"
     account_invalid: "account invalid"
+    banned_info: "Your account has been banned. Contact with admin for more information."
   static_pages:
     home:
       title_welcome: "Welcome to Books System"
@@ -168,3 +169,4 @@ en:
       edit:
         submit_bt: "Submit"
   error_not_exits: "error_not_exits"
+  js_max_pic_size: "Maximum file size is 5MB. Please choose a smaller file."

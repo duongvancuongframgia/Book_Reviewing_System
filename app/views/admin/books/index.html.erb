@@ -7,6 +7,7 @@
         <h4 class="media-heading"><%= book.title %></h4>
         <p class="text-right"><%= book.author %></p>
         <p><%= truncate(book.description, length: Settings.max_len_description) %>
+          <%= link_to t("views.books.index.read_more"), book %></p>
         <ul class="list-inline list-unstyled">
           <li><span><i class="glyphicon glyphicon-calendar"></i><%= book.publish_date %></span></li>
           <li>|</li>

@@ -1,6 +1,8 @@
 class Book < ApplicationRecord
   belongs_to :category
 
+  mount_uploader :image, PictureUploader
+  
   has_many :reviews, dependent: :destroy
   has_many :passive_rates, class_name: Rating.name,
     foreign_key: :book_id, dependent: :destroy
@@ -12,6 +14,7 @@ class Book < ApplicationRecord
   validates :description, presence: true
   validates :publish_date, presence: true, format: { with: VALID_DATE_REGEX}
   validates :author, presence: true
+  validate  :image_size
 
   scope :more_rate, -> do
     order(rating: :desc).limit Settings.limit_book
@@ -41,7 +44,7 @@ class Book < ApplicationRecord
   end
 
   private
-  def picture_size
+  def image_size
     if image.size > Settings.size_image.megabytes
       errors.add :image, Settings.alert_size_image
     end
