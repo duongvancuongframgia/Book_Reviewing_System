@@ -21,7 +21,7 @@ class User < ApplicationRecord
   has_many :reading, through: :active_reading, source: :book
   has_many :rates
   has_many :requests
-  has_many :comments
+  has_many :comments, dependent: :destroy
   has_many :activities, dependent: :destroy
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   mount_uploader :avatar, PictureUploader
