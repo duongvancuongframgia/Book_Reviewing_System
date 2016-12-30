@@ -17,19 +17,22 @@ class Admin::UsersController < ApplicationController
 	def update
 		if @user.activated?
 			@user.update activated: false
-			flash[:success] = "#{@user.name} " + t("loi.user_ban")
+			flash[:success] = "#{@user.name} " + t("admin.user_ban")
 			redirect_to admin_users_path
 		else
 			@user.update activated: true
-			flash[:success] = "#{@user.name} " + t("loi.user_unban")
+			flash[:success] = "#{@user.name} " + t("admin.user_unban")
 			redirect_to admin_users_path
 		end
 	end
 	
 	def destroy
-		@user.destroy
-		flash[:success] = t "admin.success_destroyed_user"
-		redirect_to [:admin, :users]
+		if @user.destroy
+			flash[:success] = t "admin.success_destroyed_user"
+		else
+			flash[:success] = t "admin.unsuccess_destroyed_user"
+		end
+		redirect_to admin_users_path
 	end
 	
 	private

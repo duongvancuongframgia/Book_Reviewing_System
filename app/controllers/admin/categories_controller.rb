@@ -17,7 +17,7 @@ class Admin::CategoriesController < ApplicationController
 	def create
 		@category = Category.new category_params
 		if @category.save
-			flash[:success] = t "loi.created_category"
+			flash[:success] = t "admin.created_category"
 			redirect_to [:admin, :categories]
 		else
 			render :new
@@ -29,7 +29,7 @@ class Admin::CategoriesController < ApplicationController
 	
 	def update
 		if @category.update_attributes category_params
-			flash[:success] = t "loi.updated_category"
+			flash[:success] = t "admin.updated_category"
 			redirect_to [:admin, :categories]
 		else
 			render :edit
@@ -37,8 +37,11 @@ class Admin::CategoriesController < ApplicationController
 	end
 	
 	def destroy
-		@category.destroy
-		flash[:success] = t "admin.success_destroyed_category"
+		if @category.destroy
+			flash[:success] = t "admin.success_destroyed_category"
+		else
+			flash[:success] = t "admin.unsuccess_destroyed_category"
+		end
 		redirect_to [:admin, :categories]
 	end
 	

@@ -12,9 +12,20 @@
   </div>
   <% if logged_in? %>
     <%= render partial: "shared/follow_form", locals: {user: user} %>
-    <div class="profile-user-send-request">
-      <button type="button" class="btn btn-info btn-sm">Send Request</button>
-    </div>
+    <%= form_for current_user, html: {multipart: true} do |f| %>
+      <div class="profile-user-send-request">
+        <%= f.file_field :avatar, accept: "image/jpeg,image/gif,image/png", class: "btn btn-info btn-sm" %>
+        <%= f.submit t("views.users.show.update_image_bt") %>
+      </div>
+    <% end %>
   <% end %>
   <%= render partial: "shared/stats", locals: {user: user} %>
 </div>
+<script type="text/javascript">
+  $("#book_image").bind("change", function() {
+    var size_in_megabytes = this.files[0].size/1024/1024;
+    if (size_in_megabytes > 5) {
+      alert(<%= t "js_max_pic_size" %>);
+    }
+  });
+</script>

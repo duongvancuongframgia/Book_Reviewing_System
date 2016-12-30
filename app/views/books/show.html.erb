@@ -52,9 +52,9 @@
       <% end %>
     </div>
     <div class="review-block-rate">
-      <a class="btn icon-btn btn-success" href="#">
+      <a class="btn icon-btn btn-success">
         <span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success">
-        </span>Read</a>
+        </span>Reading</a>
     </div>
     <div class="review-block-title"><%= @book.title %></div>
     <div class="review-block-description">
@@ -67,7 +67,7 @@
       <div class="media">
         <%= link_to image_tag(review.user.avatar, class: "media-object",
           size: Settings.max_size_avatar_show_review), review.user,
-            :class => "pull-left" %>
+            class: "pull-left" %>
         <div class="media-body">
           <h4 class="media-heading"><%= review.title %></h4>
           <p><%= t "views.books.show.content_review" %></p>
@@ -82,10 +82,10 @@
             <li>|</li>
             <span id="like-form-<%= review.id %>">
               <% if logged_in? %>
-                <% unless current_user.liking?(review, 1)%>
-                  <%= render partial: "shared/like", locals: {object: review} if logged_in?%>
+                <% unless current_user.liking? review, Activity.action_types[:review] %>
+                  <%= render partial: "shared/like", locals: {object: review} if logged_in? %>
                 <% else %>
-                  <%= render partial: "shared/dislike", locals: {object: review} if logged_in?%>
+                  <%= render partial: "shared/dislike", locals: {object: review} if logged_in? %>
                 <% end %>
               <% end %>
             </span>
@@ -94,12 +94,12 @@
       </div>
       <div class="row">
         <div class="col-lg-9 col-sm-offset-1 aboutme">
-          <p><%= t "views.books.show.comment_review"%></p>
+          <p><%= t "views.books.show.comment_review" %></p>
           <hr style="margin:8px auto;border-bottom: 1px solid #ccc;">
           <ol class="entries" id="list-comment-<%= review.id %>">
               <%= render review.comments %>
           </ol>
-          <%= render partial: "comments/new", locals: {review: review} if logged_in?%>
+          <%= render partial: "comments/new", locals: {review: review} if logged_in? %>
         </div>
       </div>
     <% end %>
@@ -110,21 +110,17 @@
       <div class = "row">
         <div class="col-md-6 mess-area-add"></div>
       </div>
-      <%= form_for [@book, @review],
-        remote: true do |f| %>
+      <%= form_for [@book, @review], remote: true do |f| %>
         <div class="form-group">
           <%= f.label :title %>
-          <%= f.text_field :title,
-            class: "form-control reset-input" %>
+          <%= f.text_field :title, class: "form-control reset-input" %>
         </div>
         <div class="form-group">
           <%= f.label :content %>
-          <%= f.text_area :content,
-            class: "form-control reset-input" %>
+          <%= f.text_area :content, class: "form-control reset-input" %>
         </div>
-        <%= button_tag type: "submit",
-          class: "btn btn-default aa-review-submit" do %>
-          <span><%= t "submit_button" %></span>
+        <%= button_tag type: "submit", class: "btn btn-default aa-review-submit" do %>
+          <span><%= t "views.reviews.edit.bt_review" %></span>
         <% end %>
       <% end %>
     <% end %>

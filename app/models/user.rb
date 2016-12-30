@@ -16,24 +16,29 @@ class User < ApplicationRecord
   has_many :active_bookmarks, class_name: Bookmark.name,
     foreign_key: :user_id, dependent: :destroy
   has_many :favouriting, through: :active_bookmarks, source: :book
+  has_many :active_reading, class_name: Reading.name,
+    foreign_key: :user_id, dependent: :destroy
+  has_many :reading, through: :active_reading, source: :book
+  has_many :rates
   has_many :requests
   has_many :comments
   has_many :activities
-
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   mount_uploader :avatar, PictureUploader
   has_secure_password
 
+  scope :all_except, ->(user) { where.not(id: user) }
+
   validates :name, presence: true, length: { maximum: Settings.max_len }
   attr_accessor :remember_token, :activation_token
-  before_save   :downcase_email
-  before_create :create_activation_digest
-  validates :name, presence: true, length: { maximum: 50 }
   validates :email, presence: true, format: {with: VALID_EMAIL_REGEX},
     uniqueness: {case_sensitive: false}
   validates :password, presence: true,
     length: {minimum: Settings.min_len_pass}, allow_blank: true
-  validate  :picture_size
+  validate  :image_size
+
+  before_save :downcase_email
+  before_create :create_activation_digest
 
   scope :all_except, ->(user) { where.not(id: user) }
 
@@ -74,18 +79,6 @@ class User < ApplicationRecord
     following.include? other_user
   end
 
-  scope :favourite_books, ->user_id do
-    Book.joins("INNER JOIN bookmarks ON books.id = bookmarks.book_id")
-      .where("bookmarks.user_id = ? AND bookmarks.favorite = ?",
-      user_id, true).limit Settings.limit_book
-  end
-
-  scope :filter_read_books, ->user_id do
-    Book.joins("INNER JOIN bookmarks ON books.id = bookmarks.book_id")
-      .where("bookmarks.user_id = ? AND bookmarks.status_bookmarks = ?",
-      user_id, true).limit Settings.limit_book
-  end
-
   scope :filter_like_activity, ->activity_id do
     Like.where "activity_id = ?", activity_id
   end
@@ -99,8 +92,7 @@ class User < ApplicationRecord
   end
 
   def liking? activity, action_type
-    @active = Activity.find_by user_id: self.id,
-      object_id: activity.id, action_type: action_type
+    @active = Activity.find_by object_id: activity.id, action_type: action_type
     liking.include? @active
   end
 
@@ -132,11 +124,11 @@ class User < ApplicationRecord
 
   def get_like object, action_type
     @actity = Activity.find_by object_id: object.id, action_type: action_type
-    return Like.find_by activity_id: @actity.id
+    Like.find_by activity_id: @actity.id
   end
 
-  def get_rating user, book
-    Rating.find_by user_id: user.id, book_id: book.id
+  def get_rating book
+    active_rates.find_by book_id: book.id
   end
 
   def activate
@@ -154,7 +146,7 @@ class User < ApplicationRecord
     self.activation_digest = User.digest(activation_token)
   end
 
-  def picture_size
+  def image_size
     if avatar.size > 5.megabytes
       errors.add(:avatar, "should be less than 5MB")
     end

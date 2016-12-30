@@ -1,42 +1,42 @@
 <%= will_paginate @books %>
 <% @books.each do |book| %>
   <div class="well">
-      <div class="media">
+    <div class="media">
       <%= link_to get_image(book, "media-object"), book, class: "pull-left" %>
       <div class="media-body">
         <h4 class="media-heading"><%= book.title %></h4>
-          <p class="text-right"><%= book.author %></p>
-          <p><%= truncate(book.description, length: Settings.max_len_description) %>
-          <ul class="list-inline list-unstyled">
-        <li><span><i class="glyphicon glyphicon-calendar"></i><%= book.publish_date %></span></li>
-            <li>|</li>
-
-            <li>
-              <% i = 1 %>
-              <% while i <= book.rating.floor do %>
-                <span class="glyphicon glyphicon-star"></span>
-                <% i += 1 %>
+        <p class="text-right"><%= book.author %></p>
+        <p><%= truncate(book.description, length: Settings.max_len_description) %>
+          <%= link_to t("views.books.index.read_more"), book %></p>
+        <ul class="list-inline list-unstyled">
+          <li><span><i class="glyphicon glyphicon-calendar"></i><%= book.publish_date %></span></li>
+          <li>|</li>
+          <li>
+            <% i = 1 %>
+            <% while i <= book.rating.floor do %>
+              <span class="glyphicon glyphicon-star"></span>
+              <% i += 1 %>
+            <% end %>
+            <% if book.rating.floor < Settings.max_rate %>
+              <% j = 1 %>
+              <% while j <= Settings.max_rate - book.rating.floor do %>
+                <span class="glyphicon glyphicon-star-empty"></span>
+                <% j += 1 %>
               <% end %>
-              <% if book.rating.floor < Settings.max_rate %>
-                <% j = 1 %>
-                <% while j <= Settings.max_rate - book.rating.floor do %>
-                  <span class="glyphicon glyphicon-star-empty"></span>
-                  <% j += 1 %>
-                <% end %>
-              <% end %>
-              <label><%= book.rating %></label>
-            <li>|</li>
-            </li>
-            <%= link_to t("loi.edit"), edit_admin_book_path(book) %>
-            <li>
-            <%= link_to t("loi.delete"), [:admin, book], method: :delete, data: {confirm: t("loi.are_you_sure")} %></li>
-            <li>
-              <span><i class="fa fa-facebook-square"></i></span>
-              <span><i class="fa fa-twitter-square"></i></span>
-              <span><i class="fa fa-google-plus-square"></i></span>
-            </li>
-      </ul>
-       </div>
+            <% end %>
+            <label><%= book.rating %></label>
+          <li>|</li>
+          </li>
+          <%= link_to t("admin.edit"), edit_admin_book_path(book) %>
+          <li>
+            <%= link_to t("admin.delete"), [:admin, book], method: :delete, data: {confirm: t("admin.are_you_sure")} %></li>
+          <li>
+            <span><i class="fa fa-facebook-square"></i></span>
+            <span><i class="fa fa-twitter-square"></i></span>
+            <span><i class="fa fa-google-plus-square"></i></span>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
   <hr>
