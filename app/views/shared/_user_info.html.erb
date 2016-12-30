@@ -11,12 +11,14 @@
     </div>
   </div>
   <% if logged_in? %>
-    <%= render partial: "shared/follow_form", locals: {user: user} %>
-    <%= form_for current_user, html: {multipart: true} do |f| %>
-      <div class="profile-user-send-request">
-        <%= f.file_field :avatar, accept: "image/jpeg,image/gif,image/png", class: "btn btn-info btn-sm" %>
-        <%= f.submit t("views.users.show.update_image_bt") %>
-      </div>
+    <% if current_user? user %>
+      <%= render partial: "shared/follow_form", locals: {user: user} %>
+      <%= form_for current_user, html: {multipart: true} do |f| %>
+        <div class="profile-user-send-request">
+          <%= f.file_field :avatar, accept: "image/jpeg,image/gif,image/png", class: "btn btn-info btn-sm" %>
+          <%= f.submit t("views.users.show.update_image_bt") %>
+        </div>
+      <% end %>
     <% end %>
   <% end %>
   <%= render partial: "shared/stats", locals: {user: user} %>
