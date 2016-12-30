@@ -12,10 +12,10 @@ module ApplicationHelper
     if book.image?
       image_tag book.image, class: class_image, size: Settings.size_image_book
     else
-      image_tag "book1.jpg", class: class_image, size: Settings.size_image_book
+      image_tag "book1.png", class: class_image, size: Settings.size_image_book
     end
   end
-  
+
   def get_image_user user, class_image = ""
     if user.avatar?
       image_tag user.avatar, class: class_image, size: Settings.size_image_avater

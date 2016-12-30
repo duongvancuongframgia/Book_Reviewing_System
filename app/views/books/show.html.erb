@@ -113,11 +113,11 @@
       <%= form_for [@book, @review], remote: true do |f| %>
         <div class="form-group">
           <%= f.label :title %>
-          <%= f.text_field :title, class: "form-control reset-input" %>
+          <%= f.text_field :title, class: "form-control reset-input", required: true %>
         </div>
         <div class="form-group">
           <%= f.label :content %>
-          <%= f.text_area :content, class: "form-control reset-input" %>
+          <%= f.text_area :content, class: "form-control reset-input", required: true %>
         </div>
         <%= button_tag type: "submit", class: "btn btn-default aa-review-submit" do %>
           <span><%= t "views.reviews.edit.bt_review" %></span>
