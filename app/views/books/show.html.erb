@@ -79,16 +79,16 @@
                   <%= "#{time_ago_in_words(review.created_at)}" %>
               </span>
             </li>
-            <li>|</li>
-            <span id="like-form-<%= review.id %>">
-              <% if logged_in? %>
+            <% if logged_in? %>
+              <li>|</li>
+              <span id="like-form-<%= review.id %>">
                 <% unless current_user.liking? review, Activity.action_types[:review] %>
                   <%= render partial: "shared/like", locals: {object: review} if logged_in? %>
                 <% else %>
                   <%= render partial: "shared/dislike", locals: {object: review} if logged_in? %>
                 <% end %>
-              <% end %>
-            </span>
+              </span>
+            <% end %>
           </ul>
         </div>
       </div>
