@@ -29,35 +29,7 @@
             <div class="row clearfix">
               <div class="col-md-12 column">
                 <% @reviews.each do |review| %>
-                  <div class="media">
-                    <%= link_to image_tag(review.user.avatar,
-                      class: "media-object",
-                      size: Settings.max_size_avatar_show_review),
-                      review.user, class: "pull-left" %>
-                    <div class="media-body">
-                      <h4 class="media-heading"><%= review.title %></h4>
-                      <p><%= t "views.users.show.content" %></p>
-                      <p><%= simple_format review.content %></p>
-                      <ul class="list-inline list-unstyled">
-                        <li>
-                          <span>
-                            <i class="glyphicon glyphicon-calendar"></i>
-                            <%= "#{time_ago_in_words(review.created_at)}" %>
-                          </span>
-                        </li>
-                        <% if logged_in? %>
-                          <li>|</li>
-                          <span id="like-form-<%= review.id %>">
-                            <% unless current_user.liking? review, Activity.action_types[:review] %>
-                              <%= render partial: "shared/like", locals: {object: review} if logged_in? %>
-                            <% else %>
-                              <%= render partial: "shared/dislike", locals: {object: review} if logged_in? %>
-                            <% end %>
-                          </span>
-                        <% end %>
-                      </ul>
-                    </div>
-                  </div>
+                  <%= render partial: "reviews/review", locals: {review: review} %>
                 <% end %>
                 <%= will_paginate @reviews %>
               </div>

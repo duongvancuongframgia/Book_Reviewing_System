@@ -14,9 +14,7 @@
       <i class="glyphicon glyphicon-pencil">
         <%= t "views.comments.comment.edit_bt"%>
       </i>
-    <% end %> 
-   <% end %>
-  <% if current_user?(comment.user) %>
+    <% end %>
     <%= link_to book_review_comment_path(@book.id, comment.review_id,
     comment.id), remote: true, method: :delete,
     data: { confirm: t("views.comments.comment.confirm_del") },
@@ -28,8 +26,8 @@
   <% end %>
   </span>
   <span class="timestamp">
-    <%= t "views.comments.comment.time_post"%> 
-    <%= time_ago_in_words(comment.created_at) %> 
+    <%= t "views.comments.comment.time_post"%>
+    <%= time_ago_in_words(comment.created_at) %>
     <%= t "views.comments.comment.ago"%>
   </span>
 </li>

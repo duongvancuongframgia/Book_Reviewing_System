@@ -41,6 +41,9 @@ class User < ApplicationRecord
   before_create :create_activation_digest
 
   scope :all_except, ->(user) { where.not(id: user) }
+  scope :search_by_name, ->_name do
+    where "name LIKE ?", "%#{_name}%"
+  end
 
   def User.digest string
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :

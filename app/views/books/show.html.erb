@@ -69,7 +69,7 @@
           size: Settings.max_size_avatar_show_review), review.user,
             class: "pull-left" %>
         <div class="media-body">
-          <h4 class="media-heading"><%= review.title %></h4>
+          <h4 class="media-heading" id="title-review-<%= review.id %>"><%= review.title %></h4>
           <p><%= t "views.books.show.content_review" %></p>
           <p><%= simple_format review.content %></p>
           <ul class="list-inline list-unstyled">
@@ -88,8 +88,21 @@
                   <%= render partial: "shared/dislike", locals: {object: review} if logged_in? %>
                 <% end %>
               </span>
+              <% if current_user? review.user %>
+                <li>
+                    <%= link_to t("views.reviews.review.title_edit"), edit_book_review_path(@book, review),
+                      remote: true, id: "reiview-#{@review.id}" %>
+                </li>
+                <li>|</li>
+                <li>
+                  <%= link_to t("views.reviews.review.title_delete"),
+                    book_review_path(@book.id, review.id), remote: true, method: :delete,
+                    data: {confirm: t("views.reviews.review.confirm_del")} %>
+                </li>
+              <% end %>
             <% end %>
           </ul>
+          <div id="review-content-<%= review.id %>"></div>
         </div>
       </div>
       <div class="row">
@@ -97,7 +110,7 @@
           <p><%= t "views.books.show.comment_review" %></p>
           <hr style="margin:8px auto;border-bottom: 1px solid #ccc;">
           <ol class="entries" id="list-comment-<%= review.id %>">
-              <%= render review.comments %>
+            <%= render review.comments %>
           </ol>
           <%= render partial: "comments/new", locals: {review: review} if logged_in? %>
         </div>

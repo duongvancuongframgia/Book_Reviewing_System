@@ -1,0 +1,6 @@
+<% if @prev[:controller] == 'books'%>
+  $('#review-content-<%= @review.id %>').html('<%= j render "reviews/edit", review: @review %>')
+<% else %>
+  window.location.href = '/books/<%= @book.id %>'
+  $('#review-content-<%= @review.id %>').html('<%= j render "reviews/edit", review: @review %>')
+<% end %>

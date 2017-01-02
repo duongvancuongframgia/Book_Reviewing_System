@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
   before_action :logged_in_user, only: [:create, :update]
   before_action :load_review, only: [:edit, :update, :destroy]
-  before_action :load_book, only: :create
+  before_action :load_book, only: [:create, :edit]
   before_action :load_user, only: :index
 
   def index
@@ -22,6 +22,7 @@ class ReviewsController < ApplicationController
   end
 
   def edit
+    @prev = Rails.application.routes.recognize_path(request.referrer)
     respond_to do |format|
         format.html {redirect_to request.referrer}
         format.js
@@ -29,12 +30,11 @@ class ReviewsController < ApplicationController
   end
 
   def update
-    if @comment.update_attributes review_params
-      respond_to do |format|
-        format.html {redirect_to request.referrer}
-        format.js
-      end
+    if @review.update_attributes review_params
+      flash[:success] = t "app.controllers.reviews.edit_ok"
+      redirect_back fallback_location: :back
     else
+      flash[:warning] = t "app.controllers.reviews.edit_error"
       render :edit
     end
   end
