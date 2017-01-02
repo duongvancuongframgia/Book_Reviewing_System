@@ -111,6 +111,18 @@ class User < ApplicationRecord
     favouriting.include? book
   end
 
+  def read book
+    active_reading.create book_id: book.id
+  end
+
+  def unread book
+    active_reading.find_by(book_id: book.id).destroy
+  end
+
+  def reading? book
+    reading.include? book
+  end
+
   def rating? book
     rating.include? book
   end

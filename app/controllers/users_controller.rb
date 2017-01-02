@@ -24,6 +24,7 @@ class UsersController < ApplicationController
   def show
     @reviews = @user.reviews.paginate page: params[:page]
     @books = @user.favouriting.paginate page: params[:page]
+    @readings = @user.reading.paginate page: params[:page]
   end
 
   def create

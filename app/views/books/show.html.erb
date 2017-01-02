@@ -52,9 +52,13 @@
       <% end %>
     </div>
     <div class="review-block-rate">
-      <a class="btn icon-btn btn-success">
-        <span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success">
-        </span>Reading</a>
+      <% if logged_in? %>
+        <% if current_user.reading? @book%>
+          <%= render partial: "shared/read", locals: {book: @book} %>
+        <% else %>
+          <%= render partial: "shared/reading", locals: {book: @book} %>
+        <% end %>
+      <% end %>
     </div>
     <div class="review-block-title"><%= @book.title %></div>
     <div class="review-block-description">

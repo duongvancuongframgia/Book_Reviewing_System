@@ -137,6 +137,8 @@ en:
       stat:
         title_follower: "Followers"
         title_following: "Following"
+      read: "Read"
+      reading: "Reading"
     session:
       new:
         title_login: "Log in"

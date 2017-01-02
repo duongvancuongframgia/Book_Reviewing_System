@@ -48,6 +48,10 @@
           <div class="tab-pane" id="panel-list-read-book">
             <div class="row clearfix">
               <div class="col-md-12 column">
+                <% @readings.each do |reading| %>
+                  <%= render partial: "shared/list_book", locals: {book: reading} %>
+                <% end %>
+                <%= will_paginate @readings %>
               </div>
             </div>
           </div>

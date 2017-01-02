@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   end
   resources :relationships, only: [:create, :destroy]
   resources :favourites, only: [:create, :destroy]
+  resources :readings, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
   resources :rates, only: [:create, :update]
   resources :activities, only: [:create, :destroy]
