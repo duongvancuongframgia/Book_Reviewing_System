@@ -7,12 +7,14 @@
       <% if current_page?(controller: 'users', action: 'index') %>
         <%= form_tag users_path, method: "GET", id: "search_user",
           class: "navbar-form navbar-left" do %>
-          <%= text_field_tag :name %>
+          <%= text_field_tag :name, params[:name],
+            placeholder: t("layout_header.header.search_user") %>
         <% end %>
       <% else %>
         <%= form_tag books_path, method: "GET", id: "search_book",
           class: "navbar-form navbar-left" do %>
-          <%= text_field_tag :search %>
+          <%= text_field_tag :search, params[:search],
+            placeholder: t("layout_header.header.search_book") %>
             <div id = "result_search"></div>
         <% end %>
       <% end %>

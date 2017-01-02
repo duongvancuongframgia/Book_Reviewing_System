@@ -41,7 +41,7 @@ class ReviewsController < ApplicationController
 
   def destroy
     @review.destroy
-    redirect_to @review.user
+    redirect_back fallback_location: :back
   end
 
   private

@@ -77,6 +77,9 @@ en:
       help: "Help"
       about: "About"
       contact: "Contact"
+    header:
+      search_book: "Search book by name"
+      search_user: "Search user by name"
   layout_slide:
     title: "We are creative"
     content_title: "Get start your next awesome project"
@@ -159,6 +162,9 @@ en:
         comment_review: "Comment's review: "
         book_new_review: "Add a review"
         submit_bt: "Submit"
+        rating: "Rating: "
+        favorite: "Favorite: "
+        reading: "Reading: "
     comments:
       comment:
         title_comment: "Comment's: "
