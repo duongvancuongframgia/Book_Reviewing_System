@@ -1,0 +1,15 @@
+<%= will_paginate @requests %>
+<% @requests.each do |request| %>
+<tr>
+  <td><%= request.user_id %></td>
+  <td><%= request.book_title %></td>
+  <td><%= request.content %></td>
+  <td><span class="label label-default"><%= request.status %></span></td>
+  <td>
+    <%= link_to t("admin.request_pendin"), admin_request_path(request, status: "pending"), method: :put, remote: true, class: "btn btn-warning" %>
+    <%= link_to t("admin.request_approve"), admin_request_path(request, status: "approved"), method: :put, remote: true, class: "btn btn-info" %>
+    <%= link_to t("admin.reject_request"), admin_request_path(request, status: "reject"), method: :put, remote: true, class: "btn btn-danger" %>
+  </td>
+</tr>
+<% end %>
+<% will_paginate %>

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :books
     resources :users
     resources :reviews, only: [:index, :show, :destroy, :edit]
+    resources :requests
   end
   resources :users, except: [:destroy] do
     resources :following, only: :index
