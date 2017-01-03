@@ -19,7 +19,9 @@
           <%= f.submit t("views.users.show.update_image_bt") %>
         </div>
       <% end %>
-    <%= render partial: "shared/send_request" %>
+      <% if verify_user_access? %>
+        <%= render partial: "shared/send_request" %>
+      <% end %>
     <% end %>
   <% end %>
   <%= render partial: "shared/stats", locals: {user: user} %>

@@ -22,7 +22,7 @@
                 <%= t "views.users.show.list_read" %>
               </a>
             </li>
-            <% if current_user? @user %>
+            <% if current_user?(@user) && verify_user_access? %>
               <li>
                 <a href="#panel-list-request" data-toggle="tab">
                   <%= t "views.users.show.list_request" %>

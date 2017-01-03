@@ -5,11 +5,11 @@
         <div class="panel-body">
           <div class="pull-right">
             <div class="btn-group">
-              <button type="button" class="btn btn-info btn-filter" data-target="sent">Sent</button>
-              <button type="button" class="btn btn-success btn-filter" data-target="approved">Approved</button>
-              <button type="button" class="btn btn-warning btn-filter" data-target="pending">Pending</button>
-              <button type="button" class="btn btn-danger btn-filter" data-target="reject">Reject</button>
-              <button type="button" class="btn btn-default btn-filter" data-target="all">History</button>
+              <button type="button" class="btn btn-info btn-filter" data-target="sent"><%= t "views.requests.history.bt_sent" %></button>
+              <button type="button" class="btn btn-success btn-filter" data-target="approved"><%= t "views.requests.history.bt_approved" %></button>
+              <button type="button" class="btn btn-warning btn-filter" data-target="pending"><%= t "views.requests.history.bt_pending" %></button>
+              <button type="button" class="btn btn-danger btn-filter" data-target="reject"><%= t "views.requests.history.bt_reject" %></button>
+              <button type="button" class="btn btn-default btn-filter" data-target="all"><%= t "views.requests.history.bt_all" %></button>
             </div>
           </div>
           <div class="table-container">
@@ -26,12 +26,14 @@
                             <span class="media-meta pull-right"><%= request.created_at %></span>
                             <h4 class="title">
                               <%= request.book_title %>
-                              <% if current_user.check_request request%>
-                                <%= link_to t("views.requests.history.bt_cancel"),
-                                  user_request_path(request.user, request), remote: true, method: :delete,
-                                  data: { confirm: t("views.reviews.review.confirm_del") } %>
-                              <% end %>
-                              <span class="pull-right sent">(sent)</span>
+                              <span class="pull-right sent">
+                                <%= t "views.requests.history.brand_sent" %>
+                                <% if current_user.check_request request%>
+                                  <%= link_to t("views.requests.history.bt_cancel"),
+                                    user_request_path(request.user, request), remote: true, method: :delete,
+                                    data: { confirm: t("views.requests.history.confirm_del") } %>
+                                <% end %>
+                              </span>
                             </h4>
                             <p class="summary"><%= request.content %></p>
                         </div>
@@ -48,7 +50,9 @@
                             <span class="media-meta pull-right"><%= request.created_at %></span>
                             <h4 class="title">
                               <%= request.book_title %>
-                              <span class="pull-right pending">(pending)</span>
+                              <span class="pull-right pending">
+                                <%= t "views.requests.history.brand_pending" %>
+                              </span>
                             </h4>
                             <p class="summary"><%= request.content %></p>
                         </div>
@@ -65,7 +69,9 @@
                             <span class="media-meta pull-right"><%= request.created_at %></span>
                             <h4 class="title">
                               <%= request.book_title %>
-                              <span class="pull-right approved">(approved)</span>
+                              <span class="pull-right approved">
+                                <%= t "views.requests.history.brand_approved" %>
+                              </span>
                             </h4>
                             <p class="summary"><%= request.content %></p>
                         </div>
@@ -82,7 +88,9 @@
                             <span class="media-meta pull-right"><%= request.created_at %></span>
                             <h4 class="title">
                               <%= request.book_title %>
-                              <span class="pull-right reject">(reject)</span>
+                              <span class="pull-right reject">
+                                <%= t "views.requests.history.brand_reject" %>
+                              </span>
                             </h4>
                             <p class="summary"><%= request.content %></p>
                         </div>
