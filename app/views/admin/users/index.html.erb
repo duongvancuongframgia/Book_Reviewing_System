@@ -1,16 +1,24 @@
 <%= will_paginate @users %>
 <% @users.each do |user| %>
-  <div class="well">
-    <div class="media">
+  <div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10">
+    <div class="well">
       <%= link_to get_image_user(user, "media-object"), user, class: "pull-left" %>
       <div class="media-body">
-        <p><%= user.name %></p>
+        <p><b><%= user.name %></b></p>
         <p><%= user.email %></p>
-        <p><%= link_to t("admin.detail_user"), [:admin, user] %></p>
-        <p><%= link_to t("admin.ban_user"), [:admin, user], method: :put, remote: true %></p>
-        <%= link_to t("admin.delete"), [:admin, user], method: :delete, data: {confirm: t("admin.are_you_sure")} %>
+        <%= link_to t("admin.detail_user"), [:admin, user], class: "label label-primary" %>
+        <% if user.activated? %>
+          <%= link_to t("admin.ban_user"), [:admin, user], method: :put, remote: true, class: "label label-default" %>
+        <% else %>
+          <%= link_to t("admin.unban_user"), [:admin, user], method: :put, remote: true, class: "label label-warning" %>
+        <% end %>
+        <%= link_to t("admin.delete"), [:admin, user], method: :delete, data: {confirm: t("admin.are_you_sure")}, class: "label label-danger" %>
       </div>
     </div>
+    </div>
+    <div class="col-sm-1"></div>
   </div>
   <hr>
 <% end %>

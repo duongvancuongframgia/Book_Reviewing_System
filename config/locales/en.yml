@@ -16,7 +16,7 @@ en:
     edit: "Edit"
     created_category: "Category created!"
     updated_category: "Category updated!"
-    edit_category: "Category edit"
+    edit_category: "Category Edit"
     create_category: "Create category"
     user_ban: "was Banned"
     user_unban: "was UnBanned"
@@ -32,6 +32,11 @@ en:
     account_unban: "Account unban"
     account_invalid: "account invalid"
     banned_info: "Your account has been banned. Contact with admin for more information."
+    unban_user: "Unban User"
+    user_request: "User's Request"
+    request_pendin: "Pending"
+    request_approve: "Approve"
+    reject_request: "Reject"
   static_pages:
     home:
       title_welcome: "Welcome to Books System"
