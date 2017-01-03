@@ -13,11 +13,13 @@ Rails.application.routes.draw do
     resources :books
     resources :users
     resources :reviews, only: [:index, :show, :destroy, :edit]
+    resources :requests
   end
-  resources :users, except: [:destroy, :index] do
+  resources :users, except: [:destroy] do
     resources :following, only: :index
     resources :followers, only: :index
     resources :reviews, only: :index
+    resources :requests
   end
   resources :books, only: [:index, :show] do
     resources :reviews do
@@ -27,6 +29,7 @@ Rails.application.routes.draw do
   end
   resources :relationships, only: [:create, :destroy]
   resources :favourites, only: [:create, :destroy]
+  resources :readings, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
   resources :rates, only: [:create, :update]
   resources :activities, only: [:create, :destroy]

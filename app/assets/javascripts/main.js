@@ -1,7 +1,13 @@
 $(document).on('turbolinks:load',function() {
-	$('#to-top').bind('click', function() {
-		$('body,html').animate({scrollTop: 0}, 2500);
-	});
+  $('.btn-filter').on('click', function () {
+    var $target = $(this).data('target');
+    if ($target != 'all') {
+      $('.table tr').css('display', 'none');
+      $('.table tr[data-status="' + $target + '"]').fadeIn('slow');
+    } else {
+      $('.table tr').css('display', 'none').fadeIn('slow');
+    }
+  });
 
   $('#btn-follow').on('click', function() {
     action = ($(this).text().trim()) === 'Follow' ? 'POST' : 'DELETE';
@@ -49,6 +55,35 @@ $(document).on('turbolinks:load',function() {
           $('#bt-favourite').removeClass('btn btn-danger btn-circle').addClass('btn btn-circle');
         }
         $('#bt-favourite').val(data.value);
+      },
+      error: function(error_message) {
+        alert('error ' + error_message);
+      }
+    });
+  });
+
+  $('#bt-read-book').on('click', function() {
+    action = ($(this).val().trim()) === 'reading' ? 'POST' : 'DELETE';
+    book_id = $('#book_id').val();
+    text = ($('#text-button').text().trim()) === 'Read' ? 'Reading' : 'Read';
+    url = ($(this).val().trim()) === 'reading' ? '/readings' : '/readings/' + book_id;
+    $.ajax({
+      type: action,
+      url : url,
+      dataType: 'json',
+       data: {
+        reading: {
+          book_id: book_id
+        }
+      },
+      success: function(data) {
+        if ($('#icon-eye').hasClass('glyphicon-eye-open')) {
+          $('#icon-eye').removeClass('glyphicon-eye-open').addClass('glyphicon-eye-close');
+        } else {
+          $('#icon-eye').removeClass('glyphicon-eye-close').addClass('glyphicon-eye-open');
+        }
+        $('#bt-read-book').val(data.value);
+        $('#text-button').text(text)
       },
       error: function(error_message) {
         alert('error ' + error_message);

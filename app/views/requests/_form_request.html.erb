@@ -1,0 +1,10 @@
+<%= form_for [@user, @request] do |f| %>
+  <%= render "shared/error_messages", object: f.object %>
+  <%= f.label :book_title %>
+  <%= f.text_field :book_title, class: "form-control input-sm chat-input" %>
+  <%= f.label :content %>
+  <%= f.text_area :content, class: "form-control input-sm chat-input" %>
+  <div class="wrapper">
+  <%= f.submit "send", class: "btn btn-primary btn-md" %>
+  </div>
+<% end %>

@@ -19,8 +19,8 @@ class User < ApplicationRecord
   has_many :active_reading, class_name: Reading.name,
     foreign_key: :user_id, dependent: :destroy
   has_many :reading, through: :active_reading, source: :book
-  has_many :rates
-  has_many :requests
+  has_many :rates, dependent: :destroy
+  has_many :requests, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :activities, dependent: :destroy
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -41,6 +41,9 @@ class User < ApplicationRecord
   before_create :create_activation_digest
 
   scope :all_except, ->(user) { where.not(id: user) }
+  scope :search_by_name, ->_name do
+    where "name LIKE ?", "%#{_name}%"
+  end
 
   def User.digest string
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
@@ -108,6 +111,18 @@ class User < ApplicationRecord
     favouriting.include? book
   end
 
+  def read book
+    active_reading.create book_id: book.id
+  end
+
+  def unread book
+    active_reading.find_by(book_id: book.id).destroy
+  end
+
+  def reading? book
+    reading.include? book
+  end
+
   def rating? book
     rating.include? book
   end
@@ -134,6 +149,10 @@ class User < ApplicationRecord
   def activate
     update_attribute(:activated, true)
     update_attribute(:activated_at, Time.zone.now)
+  end
+
+  def check_request request
+    return true if request.status == "sent"
   end
 
   private

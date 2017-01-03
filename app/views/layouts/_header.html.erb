@@ -4,10 +4,19 @@
       <ul class="nav navbar-nav navbar-left">
         <%= link_to t("layout_header.logo"), root_path, id: "logo", class: "navbar-brand" %>
       </ul>
-      <%= form_tag books_path, method: "GET", id: "search_book",
-        class: "navbar-form navbar-left" do %>
-        <%= text_field_tag :search %>
-          <div id = "result_search"></div>
+      <% if current_page?(controller: 'users', action: 'index') %>
+        <%= form_tag users_path, method: "GET", id: "search_user",
+          class: "navbar-form navbar-left" do %>
+          <%= text_field_tag :name, params[:name], class: "form-control",
+            placeholder: t("layout_header.header.search_user") %>
+        <% end %>
+      <% else %>
+        <%= form_tag books_path, method: "GET", id: "search_book",
+          class: "navbar-form navbar-left" do %>
+          <%= text_field_tag :search, params[:search], class: "form-control",
+            placeholder: t("layout_header.header.search_book") %>
+            <div id = "result_search"></div>
+        <% end %>
       <% end %>
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to t("layout_header.home"), root_path %></li>
@@ -57,6 +66,7 @@
                 </li>
               </ul>
             </li>
+            <li><%= link_to t("admin.user_request"), admin_requests_path %></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                 role="button" aria-expanded="false">
@@ -77,6 +87,7 @@
               </ul>
             </li>
           <% elsif verify_user_access? %>
+            <li><%= link_to t("layout_header.users_menu.users"), users_path %></li>
             <li><%= link_to t("layout_header.list_all_book"), books_path %></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"

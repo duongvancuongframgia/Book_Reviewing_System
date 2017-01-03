@@ -8,6 +8,16 @@ User.create! name: "User 2", email: "user2@gmail.com",
              is_admin: false, avatar: "avatar.jpg",
              activated: false,
              activated_at: Time.zone.now
+20.times do |n|
+  _name = Faker::Name.name
+  _pass = "123123"
+  _email = "example-#{n+1}@railstutorial.org"
+  User.create! name: _name, email: _email,
+    password: _pass, password_confirmation: _pass,
+    is_admin: false, avatar: "avatar.jpg",
+    activated: true,
+    activated_at: Time.zone.now
+end
 
 Category.create!(name: "Animals and Pets")
 Category.create!(name: "Business")

@@ -16,7 +16,7 @@ en:
     edit: "Edit"
     created_category: "Category created!"
     updated_category: "Category updated!"
-    edit_category: "Category edit"
+    edit_category: "Category Edit"
     create_category: "Create category"
     user_ban: "was Banned"
     user_unban: "was UnBanned"
@@ -32,6 +32,11 @@ en:
     account_unban: "Account unban"
     account_invalid: "account invalid"
     banned_info: "Your account has been banned. Contact with admin for more information."
+    unban_user: "Unban User"
+    user_request: "User's Request"
+    request_pendin: "Pending"
+    request_approve: "Approve"
+    reject_request: "Reject"
   static_pages:
     home:
       title_welcome: "Welcome to Books System"
@@ -77,6 +82,9 @@ en:
       help: "Help"
       about: "About"
       contact: "Contact"
+    header:
+      search_book: "Search book by name"
+      search_user: "Search user by name"
   layout_slide:
     title: "We are creative"
     content_title: "Get start your next awesome project"
@@ -104,11 +112,19 @@ en:
         login_error: "Invalid email/password combination"
       reviews:
         error_create: "Can't create review"
+        edit_ok: "Edit review successfully !"
+        edit_error: "Edit review fail !"
+      request:
+        error_save: "Can't send request"
+        success_save: "Sent request successfully !"
+        success_delete: "Cancel request successfully !"
     helpers:
       application:
         base_title: "Ruby on Rails Tutorial Sample App"
   views:
     users:
+      index:
+        detail_user: "Detail User"
       edit:
         title: "Edit user"
         bt_title_edit: "Save changes"
@@ -120,9 +136,11 @@ en:
         list_reviews: "List Reviews"
         list_favorite: "List Favorite Books"
         list_read: "List Read Books"
+        list_request: "History Request"
         title: "Title: "
         content: "Content: "
         update_image_bt: "Upload"
+        bt_send_rq: "Send Request"
     shared:
       error_message:
         error: "The form contains"
@@ -133,6 +151,8 @@ en:
       stat:
         title_follower: "Followers"
         title_following: "Following"
+      read: "Read"
+      reading: "Reading"
     session:
       new:
         title_login: "Log in"
@@ -153,6 +173,9 @@ en:
         comment_review: "Comment's review: "
         book_new_review: "Add a review"
         submit_bt: "Submit"
+        rating: "Rating: "
+        favorite: "Favorite: "
+        reading: "Reading: "
     comments:
       comment:
         title_comment: "Comment's: "
@@ -170,4 +193,24 @@ en:
       edit:
         submit_bt: "Submit"
         bt_review: "Send review"
+      review:
+        title_edit: "Edit"
+        title_delete: "Delete"
+        confirm_del: "Do you want to delete this review ?"
+    requests:
+      new:
+        title: "Send Request"
+        bt_send_rq: "Send Request"
+      history:
+        bt_cancel: "Cancel"
+        bt_all: "All History"
+        bt_sent: "Sent"
+        bt_approved: "Approved"
+        bt_pending: "Pending"
+        bt_reject: "Reject"
+        brand_sent: "(sent)"
+        brand_approved: "(approved)"
+        brand_pending: "(pending)"
+        brand_reject: "(reject)"
+        confirm_del: "Do you want to delete this request ?"
   error_not_exits: "error_not_exits"

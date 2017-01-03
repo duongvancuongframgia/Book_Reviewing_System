@@ -1,66 +1,91 @@
 <% provide :title, @book.title %>
 <div class="row">
-  <div class="col-sm-3">
-    <%= link_to get_image @book, @book %>
-    <div class="review-block-name"><%= t "views.books.show.author" %>
-      <%= @book.author %></div>
-    <div class="review-block-date"><%= t "views.books.show.publish_date" %>
-      <%= @book.publish_date %> </div>
-    <div class="rating-block">
-      <h4><%= t "views.books.show.average_user_rating" %></h4>
-      <h2 class="bold padding-bottom-7">
-        <%= @book.rating.floor %> /
-        <%= t "views.books.show.rate" %>
-      </h2>
-      <% i = 1 %>
-      <% while i <= @book.rating.floor do %>
-        <button type="button" class="btn btn-warning btn-sm"
-          aria-label="Left Align">
-          <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-        </button>
-        <% i += 1 %>
-      <% end %>
-      <% if @book.rating.floor < Settings.max_rate%>
-        <% j = 1 %>
-        <% while j <= Settings.max_rate - @book.rating.floor do %>
-          <button type="button" class="btn btn-default btn-grey btn-sm"
-            aria-label="Left Align">
-            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-          </button>
-          <% j += 1 %>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
-  <div class="col-sm-9">
-    <div class="review-block-rate">
-      <% if logged_in? %>
-        <% if current_user.rating? @book %>
-          <%= render partial: "shared/re_rate", locals: {book: @book} %>
-        <% else %>
-          <%= render partial: "shared/rate", locals: {book: @book} %>
-        <% end %>
-      <% end %>
-    </div>
-    <div class="review-block-rate">
-      <% if logged_in? %>
-        <% if current_user.favouriting? @book%>
-          <%= render partial: "shared/unfavourite", locals: {book: @book} %>
-        <% else %>
-          <%= render partial: "shared/favourite", locals: {book: @book} %>
-        <% end %>
-      <% end %>
-    </div>
-    <div class="review-block-rate">
-      <a class="btn icon-btn btn-success">
-        <span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success">
-        </span>Reading</a>
-    </div>
-    <div class="review-block-title"><%= @book.title %></div>
-    <div class="review-block-description">
-      <%= simple_format @book.description %>
+  <div class="col-sm-5">
+    <div class="col-md-12">
+      <div class="col-sm-5">
+        <%= link_to get_image @book, @book %>
+        <div class="review-block-name"><%= t "views.books.show.author" %>
+          <%= @book.author %></div>
+        <div class="review-block-date"><%= t "views.books.show.publish_date" %>
+          <%= @book.publish_date %> </div>
+      </div>
+      <div class="col-sm-7">
+        <div class="rating-block">
+          <h4><%= t "views.books.show.average_user_rating" %></h4>
+          <h2 class="bold padding-bottom-7">
+            <%= @book.rating.floor %> /
+            <%= t "views.books.show.rate" %>
+          </h2>
+          <% i = 1 %>
+          <% while i <= @book.rating.floor do %>
+            <button type="button" class="btn btn-warning btn-sm"
+              aria-label="Left Align">
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            </button>
+            <% i += 1 %>
+          <% end %>
+          <% if @book.rating.floor < Settings.max_rate%>
+            <% j = 1 %>
+            <% while j <= Settings.max_rate - @book.rating.floor do %>
+              <button type="button" class="btn btn-default btn-grey btn-sm"
+                aria-label="Left Align">
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+              </button>
+              <% j += 1 %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
     </div>
     <hr>
+    <div class="col-md-12">
+      <div class="col-md-12 review-block-rate">
+        <div class="col-md-3"><p><%= t"views.books.show.rating" %></p></div>
+        <div class="col-md-9">
+          <% if logged_in? %>
+            <% if current_user.rating? @book %>
+              <%= render partial: "shared/re_rate", locals: {book: @book} %>
+            <% else %>
+              <%= render partial: "shared/rate", locals: {book: @book} %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-md-12 review-block-rate">
+        <div class="col-md-3"><p><%= t"views.books.show.favorite" %></p></div>
+        <div class="col-md-9">
+          <% if logged_in? %>
+            <% if current_user.favouriting? @book%>
+              <%= render partial: "shared/unfavourite", locals: {book: @book} %>
+            <% else %>
+              <%= render partial: "shared/favourite", locals: {book: @book} %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-md-12 review-block-rate">
+        <div class="col-md-3"><p><%= t"views.books.show.reading" %></p></div>
+        <div class="col-md-9">
+          <% if logged_in? %>
+            <% if current_user.reading? @book%>
+              <%= render partial: "shared/read", locals: {book: @book} %>
+            <% else %>
+              <%= render partial: "shared/reading", locals: {book: @book} %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="col-md-12">
+      <div class="review-block-title"><%= @book.title %></div>
+      <div class="review-block-description">
+        <%= simple_format @book.description %>
+      </div>
+      <hr>
+    </div>
+  </div>
+  <div class="col-sm-7 set-border-left">
     <h4><%= t "views.books.show.review" %></h4>
     <div class="list-reviews">
     <% @reviews.each do |review| %>
@@ -69,7 +94,7 @@
           size: Settings.max_size_avatar_show_review), review.user,
             class: "pull-left" %>
         <div class="media-body">
-          <h4 class="media-heading"><%= review.title %></h4>
+          <h4 class="media-heading" id="title-review-<%= review.id %>"><%= review.title %></h4>
           <p><%= t "views.books.show.content_review" %></p>
           <p><%= simple_format review.content %></p>
           <ul class="list-inline list-unstyled">
@@ -88,8 +113,21 @@
                   <%= render partial: "shared/dislike", locals: {object: review} if logged_in? %>
                 <% end %>
               </span>
+              <% if current_user? review.user %>
+                <li>
+                    <%= link_to t("views.reviews.review.title_edit"), edit_book_review_path(@book, review),
+                      remote: true, id: "reiview-#{@review.id}" %>
+                </li>
+                <li>|</li>
+                <li>
+                  <%= link_to t("views.reviews.review.title_delete"),
+                    book_review_path(@book.id, review.id), remote: true, method: :delete,
+                    data: {confirm: t("views.reviews.review.confirm_del")} %>
+                </li>
+              <% end %>
             <% end %>
           </ul>
+          <div id="review-content-<%= review.id %>"></div>
         </div>
       </div>
       <div class="row">
@@ -97,7 +135,7 @@
           <p><%= t "views.books.show.comment_review" %></p>
           <hr style="margin:8px auto;border-bottom: 1px solid #ccc;">
           <ol class="entries" id="list-comment-<%= review.id %>">
-              <%= render review.comments %>
+            <%= render review.comments %>
           </ol>
           <%= render partial: "comments/new", locals: {review: review} if logged_in? %>
         </div>

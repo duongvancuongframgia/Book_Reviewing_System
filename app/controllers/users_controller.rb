@@ -2,10 +2,15 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: :destroy
-  before_action :load_user, except: [:new, :create]
+  before_action :load_user, except: [:index, :new, :create]
 
   def index
-    @users = User.all
+    @users = User.all_except(current_user).paginate page: params[:page],
+      per_page: Settings.per_page
+    unless params[:name].blank?
+      @users = User.search_by_name(params[:name])
+        .paginate page:params[:page], per_page: Settings.per_page
+    end
   end
 
   def new
@@ -19,6 +24,8 @@ class UsersController < ApplicationController
   def show
     @reviews = @user.reviews.paginate page: params[:page]
     @books = @user.favouriting.paginate page: params[:page]
+    @readings = @user.reading.paginate page: params[:page]
+    @requests = @user.requests.paginate page: params[:page]
   end
 
   def create
@@ -43,7 +50,7 @@ class UsersController < ApplicationController
       render :edit
     end
   end
-  
+
   private
   def user_params
     params.require(:user).permit :name, :email, :avatar,
