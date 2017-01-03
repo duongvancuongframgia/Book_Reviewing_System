@@ -7,7 +7,11 @@
         <p><%= user.name %></p>
         <p><%= user.email %></p>
         <p><%= link_to t("admin.detail_user"), [:admin, user] %></p>
-        <p><%= link_to t("admin.ban_user"), [:admin, user], method: :put, remote: true %></p>
+        <% if user.activated? %>
+          <p><%= link_to "Ban User", [:admin, user], method: :put, remote: true %></p>
+        <% else %>
+          <p><%= link_to "Unban User", [:admin, user], method: :put, remote: true %></p>
+        <% end %>
         <%= link_to t("admin.delete"), [:admin, user], method: :delete, data: {confirm: t("admin.are_you_sure")} %>
       </div>
     </div>

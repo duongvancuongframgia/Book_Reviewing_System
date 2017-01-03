@@ -32,6 +32,12 @@ en:
     account_unban: "Account unban"
     account_invalid: "account invalid"
     banned_info: "Your account has been banned. Contact with admin for more information."
+    manage_request_user: "User's Request"
+    all_request: "All Request"
+    user_id: "User id"
+    titlebook_request: "Title book"
+    content_request: "Content"
+    status_request: "Status request"
   static_pages:
     home:
       title_welcome: "Welcome to Books System"
