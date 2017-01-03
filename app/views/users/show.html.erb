@@ -22,6 +22,11 @@
                 <%= t "views.users.show.list_read" %>
               </a>
             </li>
+            <li>
+              <a href="#panel-list-request" data-toggle="tab">
+                <%= t "views.users.show.list_request" %>
+              </a>
+            </li>
           </ul>
         </div>
         <div class="tab-content">
@@ -52,6 +57,13 @@
                   <%= render partial: "shared/list_book", locals: {book: reading} %>
                 <% end %>
                 <%= will_paginate @readings %>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="panel-list-request">
+            <div class="row clearfix">
+              <div class="col-md-12 column">
+                <%= render partial: "requests/history_request", locals: {requests: @requests} %>
               </div>
             </div>
           </div>

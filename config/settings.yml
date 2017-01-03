@@ -13,4 +13,5 @@ max_len_name: 100
 max_len_description: 150
 max_rate: 5
 max_size_avatar_show_review: 80
+size_image_avatar_request: 40
 min_rate: 1

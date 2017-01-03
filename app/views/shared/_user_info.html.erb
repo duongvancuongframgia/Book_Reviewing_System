@@ -19,6 +19,7 @@
           <%= f.submit t("views.users.show.update_image_bt") %>
         </div>
       <% end %>
+    <%= render partial: "shared/send_request" %>
     <% end %>
   <% end %>
   <%= render partial: "shared/stats", locals: {user: user} %>

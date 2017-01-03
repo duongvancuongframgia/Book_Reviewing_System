@@ -19,8 +19,8 @@ class User < ApplicationRecord
   has_many :active_reading, class_name: Reading.name,
     foreign_key: :user_id, dependent: :destroy
   has_many :reading, through: :active_reading, source: :book
-  has_many :rates
-  has_many :requests
+  has_many :rates, dependent: :destroy
+  has_many :requests, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :activities, dependent: :destroy
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -149,6 +149,10 @@ class User < ApplicationRecord
   def activate
     update_attribute(:activated, true)
     update_attribute(:activated_at, Time.zone.now)
+  end
+
+  def check_request request
+    return true if request.status == "sent"
   end
 
   private

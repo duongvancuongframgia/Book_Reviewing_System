@@ -1,7 +1,13 @@
 $(document).on('turbolinks:load',function() {
-	$('#to-top').bind('click', function() {
-		$('body,html').animate({scrollTop: 0}, 2500);
-	});
+  $('.btn-filter').on('click', function () {
+    var $target = $(this).data('target');
+    if ($target != 'all') {
+      $('.table tr').css('display', 'none');
+      $('.table tr[data-status="' + $target + '"]').fadeIn('slow');
+    } else {
+      $('.table tr').css('display', 'none').fadeIn('slow');
+    }
+  });
 
   $('#btn-follow').on('click', function() {
     action = ($(this).text().trim()) === 'Follow' ? 'POST' : 'DELETE';

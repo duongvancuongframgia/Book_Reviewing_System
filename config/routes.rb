@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     resources :following, only: :index
     resources :followers, only: :index
     resources :reviews, only: :index
+    resources :requests
   end
   resources :books, only: [:index, :show] do
     resources :reviews do
